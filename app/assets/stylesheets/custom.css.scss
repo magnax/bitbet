@@ -1,0 +1,167 @@
+@import "bootstrap";
+
+body {
+	font: 16px/26px Helvetica, Arial, sans-serif;	
+}
+
+.container {
+	article {
+		float: left;
+		width: 63%;
+	}
+	aside {
+		div.field_with_errors {
+			display: inline;
+		}
+		float: right;
+		width: 30%;
+		color: #fff;
+		background-color: #f16529;
+		padding: 0px 3% 10px;
+		border-top: 5px solid #e44d26;
+		-webkit-box-shadow: 0 5px 10px #aaa;
+		-moz-box-shadow: 0 5px 10px #aaa;
+		box-shadow: 0 5px 10px #aaa;
+		text-shadow: 2px 2px 2px rgba(0,0,0,0.4);
+		div.field {
+			.control-label {
+				float: left;
+				width: 90px;
+				padding-top: 1px;
+				text-align: right;
+
+			}
+			input[name="bid[amount]"] {
+				width: 85px;
+			}
+			input[type="radio"] {
+				margin-left: 10px;
+				box-sizing: border-box;
+				padding: 0;
+			}
+		}
+	}
+}
+.control-radio-label {
+	display: inline;
+}
+.form-info {
+	line-height: 18px;
+	margin-bottom: 15px;
+	text-shadow: 0 1px 1px rgba(0,0,0,0.7);
+}
+
+.date_past {
+    color: #c33;
+    font-weight: bold;
+}
+
+.date_valid {
+    color: #093;
+    font-weight: bold;
+}
+
+.bet_description {
+    padding: 4px 8px;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.bet_info {
+    padding: 10px 20px;
+    background-color: #b3d4fc;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.6);
+    margin-top: 30px;
+    border-radius: 5px;
+    width: 350px;
+    border: 1px solid #aaa;
+}
+
+.filter {
+	display: block;
+	overflow: hidden;
+	padding: 0;
+	margin-bottom: 5px;
+	li {
+		list-style: none;
+		border-radius: 5px;
+		float: left;
+		padding: 3px 5px;
+		margin: 2px;
+		line-height: 14px;
+		font-size: 12px;
+		color: #f1f1f1;
+		&.agree {
+			background: #093;
+		}
+		&.disagree {
+			background: #c33;
+		}
+		&.active {
+			background: #999;
+		}
+	}
+}
+
+h3 {
+	font-size: 1.17em;
+	margin: 1em 0;
+}
+
+h6 {
+	font-size: 16px;
+	margin: 0;
+	padding: 0;
+	line-height: 23px;
+}
+
+.line-divider {
+	clear: both;
+	padding: 0 0 10px 0;
+	margin: 0 0 10px 0;
+	border-bottom: 1px solid #d7d7d7;
+}
+
+.category {
+	border-radius: 8px;
+	display: block;
+	float: left;
+	padding: 3px 7px;
+	margin: 2px 4px;
+	line-height: 14px;
+	font-size: 12px;
+}
+
+.category_1 {
+    background: #093;
+    color: #fff;
+}
+
+.category_2 {
+    background: #f16529;
+    color: #fff;
+}
+
+.category_3 {
+    background: #0081c2;
+    color: #fff;
+}
+
+.category_4 {
+    background: #FFD324;
+}
+
+.category_5 {
+    background: #f44;
+    color: #fff;
+}
+
+.category_6 {
+    background: #ccc;
+}
+
+.category_7 {
+    background: #555;
+    color: #fff;
+} 

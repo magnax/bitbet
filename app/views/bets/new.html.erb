@@ -1,0 +1,28 @@
+<% provide(:aside, 'new') %>
+<h1>Twórz nowe zdarzenie</h1>
+<%= form_for @bet do |f| %>
+	<%= render 'shared/error_messages', object: f.object %>
+	<div class="field">
+		<%= f.label :name, "Tytuł zdarzenia" %>
+		<%= f.text_field :name %>
+	</div>
+	<div class="field">
+		<%= f.label :text, "Opis" %>
+		<%= f.text_area :text %>
+	</div>
+	<div class="field">
+		<%= f.label :category_id, "Kategoria" %>
+		<%= f.collection_select :category_id, Category.all, :id, :name, :include_blank => "-- wybierz --" %>
+	</div>
+	<div class="field">
+		<%= f.label :deadline, "Zakłady do" %>
+		<%= f.text_field :deadline %>
+	</div>
+	<div class="field">
+		<%= f.label :event_at, "Data zdarzenia" %>
+		<%= f.text_field :event_at %>
+	</div>
+	<div class="actions">
+		<%= f.submit "Zapisz" %>
+	</div>
+<% end %>

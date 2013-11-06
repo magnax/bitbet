@@ -1,9 +1,25 @@
 BitbetTk::Application.routes.draw do
+
+  get "bids/new"
+  get "bids/create"
+  get "bids_controller/new"
+  get "bids_controller/create"
+  get "bets/index"
+  get "bets/create"
+  #root path
+  root "static_pages#index"
+
+  #static pages paths
+  match "/faq", to: "static_pages#faq", via: "get"
+  match "terms", to: "static_pages#terms", via: "get"
+  match "/contact", to: "static_pages#contact", via: "get"
+
+  resources :bets do
+    resources :bids
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
-
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

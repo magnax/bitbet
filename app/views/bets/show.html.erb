@@ -1,0 +1,25 @@
+<% provide(:aside, 'show') %>
+<h1><%= @bet.name %></h1>
+<div class="bet_description">
+    <%= @bet.text %>
+</div>
+<div class="bet_info">
+    <div class="bet_info_item">
+        Zakłady do: <span class="<%= @bet.deadline < Date.today ? 'date_past' : 'date_valid' %>"><%= @bet.deadline %></span>
+    </div>
+    <div class="bet_info_item">
+        Data zdarzenia: <span class="<%= @bet.event_at < Date.today ? 'date_past' : 'date_valid' %>"><%= @bet.event_at %></span>
+    </div>
+    <div class="bet_info_item">
+        Kategoria: <strong><%= @bet.category.name %></strong>
+    </div>
+    <div class="bet_info_item">
+        Suma zakładów "ZA": <strong><%= view_as_btc(@bet.sum_positive, 5) %> BTC</strong>
+    </div>
+    <div class="bet_info_item">
+        Suma zakładów "PRZECIW": <strong><%= view_as_btc(@bet.sum_negative, 5) %> BTC</strong>
+    </div>
+    <div class="bet_info_item">
+        <small>Utworzony: <%= @bet.created_at %></small>
+    </div>
+</div>

@@ -1,0 +1,3 @@
+<% object.each do |name, value| %>
+	<%= link_to value, "/bets/?#{query_string(params, key, name)}" %>
+<% end %>

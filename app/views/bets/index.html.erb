@@ -1,0 +1,11 @@
+<h1>Zdarzenia</h1>
+Status: <%= @status %>
+<div>Pokaż: <%= render partial: 'shared/querystring', locals: { key: 'status', object: @status_names } %></div>
+<div>Z kategorii: <%= render 'shared/categories' %></div>
+<div>Sortuj: <%= render partial: 'shared/querystring', locals: { key: 'order', object: @order_names } %></div>
+<% if @bets.any? %>
+	<h3>Zdarzenia:</h3>
+	<%= render @bets %>
+<% else %>
+	<div class="alert alert-error">Nie znaleziono pasujących zdarzeń</div>
+<% end %>

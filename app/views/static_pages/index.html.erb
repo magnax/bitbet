@@ -1,0 +1,21 @@
+<% provide(:aside, 'index') %>
+Zakłady Bitcoin to strona, na której możesz wygrywać BTC, zakładając się o rzeczywiste zdarzenia.
+
+Możesz zarabiać na dwa sposoby:
+<ul>
+    <li>
+        zakładając się o istniejące już <%= link_to "zdarzenia", bets_path %>
+    </li>
+    <li>
+        lub <%= link_to "tworząc nowe zdarzenie", new_bet_path %>
+    </li>
+</ul>
+<h3>Nasze propozycje dostępnych zakładów:</h3>
+<% if @bets.any? %>
+    <% @bets.each do |bet| %>
+        <%= render bet %>
+    <% end %> 
+    <h4><%= link_to "Zobacz wszystkie", bets_path %></h4>
+<% else %>
+    Niestety, w tej chwili nie ma żadnych zdarzeń :(
+<% end %>

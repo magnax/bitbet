@@ -1,0 +1,6 @@
+<div class="filter">
+	<h6><%= link_to bet.name, bet %></h6>
+	<%= render partial: "bets/mini_info", locals: { bet: bet } %>
+	<span class="category category_<%= bet.category_id %>"><%= bet.category.name; %></span>
+</div>
+<div class="line-divider"></div>
