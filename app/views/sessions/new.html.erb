@@ -1,0 +1,16 @@
+Jeśli nie masz jeszcze konta, możesz się <%= link_to "zarejestrować", register_path %>.
+Jeśli masz, zaloguj się:
+<%= form_for(:session, url: sessions_path) do |f| %>
+    <div class="field">
+		<%= f.label :name, "Użytkownik:", class: "control-label" %>
+		<%= f.text_field :name %>
+	</div>
+    <div class="field">
+		<%= f.label :password, "Hasło:", class: "control-label" %>
+		<%= f.password_field :password %>
+	</div>
+    <div class="actions">
+		<%= f.submit "Zaloguj się" %>
+	</div>
+<% end %>
+<%= link_to "Nie pamiętasz hasła?", password_reset_path %>

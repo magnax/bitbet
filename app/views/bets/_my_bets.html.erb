@@ -1,0 +1,14 @@
+<div class="my_bets_list">
+<% if bets.any? %>    
+    <% bets.each do |bet| %>
+        <div class="my_bet"><%= link_to bet.name, bet %>
+            <% if bet.closed? %>
+                <span class="bet_status <%= bet.positive ? 'bet_status_positive' : 'bet_status_negative' %>"><%= bet.positive ? 'PRAWDA!' : 'FAŁSZ!' %></span>
+            <% end %>
+            <%= render partial: "bids/my_bids", locals: { bet: bet } %>
+        </div>
+    <% end %>
+<% else %>
+    <div class="my_bet"><%= no_bets_message %></div>
+<% end %>
+</div>

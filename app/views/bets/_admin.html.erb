@@ -1,0 +1,24 @@
+<% if bet.waiting? %>
+ <%= link_to "Rozlicz", end_path(@bet) %>
+<% end %>
+<% if bet.created? %>
+	<%= link_to "Zatwierdź", publish_path(@bet) %> <%= link_to "Odrzuć", reject_path(@bet) %>
+<% elsif bet.visible? %>
+	<%= link_to "Zbanuj (usuń)", ban_path(@bet) %>
+<% end %>
+<% if bet.banned? || bet.closed? %>
+ <%= link_to "Usuń z bazy", @bet, method: "delete" %>
+<% end %>
+<br />
+
+<% if bet.closed? %>
+	Zamknięty
+<% else %>
+	Nie zamknięty
+<% end %>
+<br />
+<% if bet.banned? %>
+	Zbanowany
+<% else %>
+	Nie zbanowany
+<% end %>

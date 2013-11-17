@@ -1,0 +1,27 @@
+<h1>Zarejestruj się</h1>
+<%= form_for @user do |f| %>
+	<%= render 'shared/error_messages', :object => @user %>
+	<div class="field">
+		<%= f.label :name, "Użytkownik:", class: "control-label" %>
+		<%= f.text_field :name %>
+	</div>
+	<div class="field">
+		<%= f.label :email, "Adres e-mail:", class: "control-label" %>
+		<%= f.text_field :email %>
+	</div>
+	<div class="field">
+		<%= f.label :password, "Hasło:", class: "control-label" %>
+		<%= f.password_field :password %>
+	</div>
+	<div class="field">
+		<%= f.label :password_confirmation, "Hasło ponownie:", class: "control-label" %>
+		<%= f.password_field :password_confirmation %>
+	</div>
+	<div class="field">
+		<%= f.label :ref_id, "Polecający:", class: "control-label" %>
+		<%= f.text_field :ref_id %>
+	</div>
+    <div class="actions">
+		<%= f.submit "Zarejestruj się" %>
+	</div>
+<% end %>

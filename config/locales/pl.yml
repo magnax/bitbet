@@ -1,0 +1,43 @@
+# config/locales/pl.yml
+pl:
+  activerecord:
+    attributes:
+      bid:
+        amount_in_stc: "E-mail address"
+      user:
+        name: "Nazwa użytkownika"
+        email: "Adres e-mail"
+        password: "Hasło"
+        password_confirmation: "Potwierdzenie hasła"
+      account:
+        nr: "Numer konta BTC"
+    errors:
+      models:
+        bid:
+          attributes:
+            amount_in_stc:
+              blank: "wymagany"
+        user:
+          attributes:
+            name:
+              blank: "nie może być pusta"
+            email:
+              blank: "nie może być pusty"
+              invalid: "ma nieprawidłowy format"
+            password:
+              blank: "nie może być puste"
+              too_short: "za krótkie"
+            password_confirmation:
+              confirmation: "musi być takie samo jak hasło"
+              blank: "nie może być puste"
+        account:
+          attributes:
+            nr:
+              blank: "nie może być pusty"
+              not_valid: "nieprawidłowy"
+              taken: "jest już zajęty"
+  datetime:
+    distance_in_words:
+      x_days: "%{count} dni"
+      about_x_months: "około %{count} m-cy"
+      about_x_hours: "około %{count} godzin"

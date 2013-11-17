@@ -7,11 +7,12 @@ class BidsController < ApplicationController
   def create
   	@bet = Bet.find(params[:bet_id])
   	@bid = @bet.bids.build(bid_params)
+  	bid_amount_in_stc = bid_params[:amount_in_stc]
   	if @bid.save
   		flash[:success] = "Pomyślnie obstawiłeś zdarzenie!" 
   		redirect_to bet_path(@bet)
   	else
-  		@bid.amount = bid_params[:amount]
+  		@bid.amount_in_stc = bid_amount_in_stc
   		render :template => 'bets/show'
   	end
   end
@@ -19,9 +20,7 @@ class BidsController < ApplicationController
   private
 
   	def bid_params
-  		params.require(:bid).permit(:user_id, :bet_id, :amount, :positive) 
+  		params.require(:bid).permit(:user_id, :bet_id, :amount_in_stc, :positive) 
   	end
-
-
 
 end

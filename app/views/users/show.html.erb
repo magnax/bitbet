@@ -1,0 +1,71 @@
+<h2>Dane użytkownika</h2>
+Nazwa: <strong><%= @user.name %></strong> <%= link_to "Zmień hasło", '#' %><br />
+Adres e-mail: <strong><%= @user.email; %></strong> <%= link_to "Zmień", '#' %><br />
+Adres do depozytów: 
+<% if @user.deposit_address %>
+    <input type="text" readonly="1" value="<%= @user.deposit_address %>" class="selectOnClick btc_address" />
+<% else %>
+    <%= link_to "Ustaw", deposit_address_path %>
+<% end %>
+<br />
+Adres do wypłat: <strong><%= @user.withdrawal_address || '[brak adresu]' %></strong> <%= link_to "Zmień", withdrawal_address_path %><br />
+Dostępne środki: <strong><%= view_as_btc(@user.available_funds, 5) %> BTC</strong> <%= link_to "Wypłać", '#' %><br />
+Środki zamrożone w zakładach: <strong><%= view_as_btc(@user.frozen_funds, 5) %> BTC</strong><br />
+Twój link: <input type="text" readonly="1" value="http://bitbet.tk/register?ref_id=<%= @user.id %>" class="selectOnClick ref_link" /> 
+<% if @user.referrals.count %>
+    <%= link_to "Pokaż referrali #{@user.referrals.count}", '#' %><br />
+<% else %>
+    Nie masz żadnych referrali w tej chwili.
+<% end %>
+
+<h3>Twoje zdarzenia</h3>
+<div class="my_bets">
+    <span>Zdarzenia oczekujące na zatwierdzenie (<%= @user.created_bets.count %>)</span>
+    <%= render partial: "bets/my_bets", locals: { bets: @user.created_bets, no_bets_message: "Nie ma w tej chwili żadnych nowo utworzonych zdarzeń" } %>
+</div>
+<div class="my_bets">
+    <span>Zdarzenia aktywne (<%= @user.active_bets.count %>)</span>
+    <%= render partial: "bets/my_bets", locals: { bets: @user.active_bets, no_bets_message: "Nie ma w tej chwili żadnych aktywnych zdarzeń" } %>
+</div>
+<div class="my_bets">
+    <span>Zdarzenia oczekujące na rozstrzygnięcie (<%= @user.waiting_bets.count %>)</span>
+    <%= render partial: "bets/my_bets", locals: { bets: @user.waiting_bets, no_bets_message: "Nie ma w tej chwili żadnych oczekujących zdarzeń" } %>
+</div>
+<div class="my_bets">
+    <span>Zdarzenia zamknięte (<%= @user.closed_bets.count %>)</span>
+    <%= render partial: "bets/my_bets", locals: { bets: @user.closed_bets, no_bets_message: "Nie ma w tej chwili żadnych zamkniętych zdarzeń" } %>
+</div>
+<div class="my_bets">
+    <span>Zdarzenia odrzucone (<%= @user.rejected_bets.count %>)</span>
+    <%= render partial: "bets/my_bets", locals: { bets: @user.rejected_bets, no_bets_message: "Nie ma w tej chwili żadnych odrzuconych zdarzeń" } %>
+</div>
+
+<h3>Twoje zakłady</h3>
+
+<div class="my_bets">
+    <span>Zakłady aktywne (<%= @user.active_bids.count.length %>)</span>
+    <%= render partial: "bets/my_bets", locals: { bets: @user.active_bids, bids: true, no_bets_message: "Nie ma w tej chwili żadnych aktywnych zakładów" } %>
+</div>
+<div class="my_bets">
+    <span>Zakłady zamknięte (<%= @user.closed_bids.count.length %>)</span>
+    <%= render partial: "bets/my_bets", locals: { bets: @user.closed_bids, bids: true, no_bets_message: "Nie ma w tej chwili żadnych zamkniętych zakładów" } %>
+</div>
+
+<h3>Twoje transakcje</h3>
+<div class="my_bets">
+    <span>Wpływy (depozyty, prowizje i wygrane) (<%= @user.deposits.count %>)</span>
+    <%= render partial: "bets/my_operations", locals: { operations: @user.deposits, no_items_message: "Nie masz żadnych wpłat" } %>
+</div>
+<div class="my_bets">
+    <span>Wypłaty (<%= @user.withdrawals.count %>)</span>
+    <%= render partial: "bets/my_operations", locals: { operations: @user.withdrawals, no_items_message: "Nie masz żadnych wypłat" } %>
+</div>
+
+<script>    
+    $('.selectOnClick').on('click', function() {
+        $(this).select();
+    });
+    $('.my_bets span').on('click', function() {
+        $(this).parent().find('.my_bets_list').toggle('slow');
+    });
+</script>

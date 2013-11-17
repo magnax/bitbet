@@ -1,3 +1,9 @@
 <li class="agree"><%= view_as_btc(bet.sum_positive, 2) %></li>
 <li class="disagree"><%= view_as_btc(bet.sum_negative, 2) %></li>
-<li class="active" data-toggle="tooltip" title data-original-title="Deadline:"><%= bet.time_remaining %></li>
+<li class="active" data-toggle="tooltip" title data-original-title="Deadline:">
+	<% if bet.visible? || bet.created? %>
+		<%= distance_of_time_in_words_to_now bet.event_at %>
+	<% else %>
+		<%= bet.status %>
+	<% end %>
+</li>

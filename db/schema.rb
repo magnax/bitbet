@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131101210941) do
+ActiveRecord::Schema.define(version: 20131116223006) do
+
+  create_table "accounts", force: true do |t|
+    t.integer  "user_id"
+    t.string   "nr"
+    t.string   "account_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "bets", force: true do |t|
     t.integer  "user_id"
@@ -42,6 +50,30 @@ ActiveRecord::Schema.define(version: 20131101210941) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "operations", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "amount"
+    t.integer  "account_id"
+    t.integer  "bet_id"
+    t.string   "type"
+    t.string   "txid"
+    t.integer  "time"
+    t.integer  "timereceived"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "password_digest"
+    t.string   "remember_token"
+    t.boolean  "admin"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "ref_id"
   end
 
 end

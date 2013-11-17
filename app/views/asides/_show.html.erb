@@ -1,3 +1,16 @@
 <aside>
-	<%= render partial: 'bids/new', locals: { bet: @bet, bid: @bid } %>
+	<% if @bet.active? %>
+		<%= render partial: 'bids/new', locals: { bet: @bet, bid: @bid } %>
+	<% else %>
+		<%= render partial: "bets/status/#{@bet.status}", locals: { bet: @bet } %>
+	<% end %>
+	<% if current_user.bids.for_bet(@bet) %>
+		<h6>Tak obstawiałeś to zdarzenie:</h6>
+		<%= render partial: "bids/my_bids", locals: { bet: @bet } %>
+	<% end %>
 </aside>
+<% if current_user.admin %>
+	<aside>
+		<%= render partial: 'bets/admin', locals: { bet: @bet } %>
+	</aside>
+<% end %>

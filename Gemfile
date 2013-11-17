@@ -15,6 +15,13 @@ group :development, :test do
   gem 'rspec-rails', '2.13.1'
 end
 
+# Bitcoin Client 
+#gem 'bitcoin-client', github: 'kristianmandrup/bitcoin-client'
+gem 'rpcjson', github: 'jjeffus/rpcjson'
+
+#Whenever is a Ruby gem that provides a clear syntax for writing and deploying cron jobs
+gem 'whenever', :require => false
+
 group :test do
   gem 'selenium-webdriver', '2.35.1'
   gem 'capybara', '2.1.0'
@@ -31,7 +38,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -46,9 +53,6 @@ group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Use unicorn as the app server
 # gem 'unicorn'

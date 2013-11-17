@@ -2,81 +2,56 @@ require 'spec_helper'
 
 describe Bid do
   	
-  	before { @bid = FactoryGirl.create(:bid) }
+  	before { @bid = Bid.new(
+  			user_id: 1,
+  			bet_id: 1,
+  			amount_in_stc: 1,
+  			positive: true
+  		) }
 
 	subject { @bid }
 
 	it { should be_valid }
+	it { should respond_to(:amount_in_stc) }
 
-	describe "should not be valid without user_id" do
-		before { @bid.user_id = nil }
+	describe "should be invalid without amount" do
+		before { @bid.amount_in_stc = " " }
 		it { should_not be_valid }
 	end
 
-	describe "should not be valid without bet_id" do
-		before { @bid.bet_id = nil }
+	describe "should be invalid without amount" do
+		before { @bid.amount_in_stc = "0" }
 		it { should_not be_valid }
 	end
 
-	describe "should not be valid without amount" do
-		before { @bid.amount = nil }
+	describe "should be invalid with invalid amount" do
+		before { @bid.amount_in_stc = "asdfg" }
 		it { should_not be_valid }
 	end
 
-	describe "should be invalid with not valid amount" do
-		before { @bid.amount = "aassdd" }
+	describe "should be invalid with invalid amount" do
+		before { @bid.amount_in_stc = "3a" }
 		it { should_not be_valid }
 	end
 
-	describe "should not be valid without positive" do
-		before { @bid.positive = nil }
-		it { should_not be_valid }
-	end
+	describe "valid cases" do
+		its(:amount) { should eq 100_000_000 }
 
-	describe "should be valid with positive set to 0" do
-		before { @bid.positive = 0 }
-		it { should be_valid }
-	end
-
-	describe "should be valid with valid string" do
-		before { @bid.amount = "0,33" }
-		it { should be_valid }
+		it "should be valid" do
+			inputs = %w[0,2 3.3 3 .2 ,34]
+	  		inputs.each do |valid_input|
+	        	@bid.amount_in_stc = valid_input
+	        	expect(@bid).to be_valid
+	      	end
+	    end
 	end
 
 	it "should be invalid" do
-		inputs = %w[0,,2 asdf 3..3 3a]
+		inputs = %w[0,,2 asdf 3a 3..3]
   		inputs.each do |invalid_input|
-        	@bid.amount = invalid_input
+        	@bid.amount_in_stc = invalid_input
         	expect(@bid).not_to be_valid
       	end
     end
-
-    it "should be valid" do
-		inputs = %w[0,2 3.3 3]
-  		inputs.each do |valid_input|
-        	@bid.amount = valid_input
-        	expect(@bid).to be_valid
-      	end
-    end
-
-	describe "amount" do
-
-		describe "should be converted to satoshi" do
-      		before do
-	        	@bid.amount = "0.1"
-	        	@bid.save
-	        end
-	        its(:amount) { should eq 10_000_000 }
-		end
-
-		describe "should be converted to satoshi" do
-      		before do
-	        	@bid.amount = "0,2"
-	        	@bid.save
-	        end
-	        its(:amount) { should eq 20_000_000 }
-		end
-
-	end
 
 end

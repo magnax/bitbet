@@ -1,0 +1,4 @@
+<h2>Informacje o serwerze/kliencie bitcoin</h2>
+<% @address.each_key do |key| %>
+    <%= "#{key}: #{@address[key]}" %><br />
+<% end %>

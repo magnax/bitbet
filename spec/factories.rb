@@ -19,7 +19,7 @@ FactoryGirl.define do
   factory :bid do
     user_id 1
     bet_id 1
-    amount 2
+    amount_in_stc 2
     positive 1
   end
 

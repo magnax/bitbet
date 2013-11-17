@@ -1,6 +1,7 @@
 #encoding = utf-8
 class Bet < ActiveRecord::Base
-	default_scope lambda { order('created_at DESC') }
+
+	default_scope lambda { order('bets.created_at DESC') }
 
 	scope :visible, lambda { where('bets.published_at IS NOT NULL and bets.banned = ?', 0) }
 	scope :active, lambda { visible.where('bets.deadline > ? and bets.closed_at IS NULL', Time.now.strftime("%Y-%m-%d")) }
@@ -25,7 +26,7 @@ class Bet < ActiveRecord::Base
 	validate :proper_event_date
 
 	def Bet.for_display(params)
-		scope1 = status_names.keys.include?(params[:status]) ? Bet.send(params[:status]) : Bet.visible
+		scope1 = status_names(true).keys.include?(params[:status]) ? Bet.send(params[:status]) : Bet.visible
 		if scope1 && !params[:order].nil?
 			scope2 = Bet.send(params[:order])
 		end
@@ -36,6 +37,21 @@ class Bet < ActiveRecord::Base
 		merged = merged ? merged.merge(scope3) : []
 	end
 
+	def publish!
+		self.published_at = Time.now
+		self.save
+	end
+
+	def ban!
+		self.banned = true
+		self.save
+	end
+
+	def reject!
+		self.closed_at = Time.now
+		self.save
+	end
+
 	def sum_positive
 		bids.positive.sum('amount')
 	end
@@ -44,22 +60,67 @@ class Bet < ActiveRecord::Base
 		bids.negative.sum('amount')
 	end
 
-	def time_remaining
-		"56 dni"
+	def visible?
+		published? && !banned?
+	end
+
+	def active?
+		visible? && !closed? && self.deadline >= Time.now
+	end
+
+	def waiting?
+		visible? && !closed? && self.deadline < Time.now
+	end
+
+	def banned?
+		self.banned
+	end
+
+	def closed?
+		!self.closed_at.nil?
+	end
+
+	def created?
+		!published? && !banned? && !closed?
+	end
+
+	def published?
+		!self.published_at.nil?
+	end
+
+	def status
+		if created?
+			"new"
+		elsif active?
+			"active"
+		elsif waiting?
+			"waiting"
+		elsif closed?
+			"closed"
+		elsif banned?
+			"banned"
+		else				
+			"rejected"	
+		end
 	end
 
 private
 
-	def Bet.status_names
-		{ 
+	def Bet.status_names(admin)
+		statuses = { 
 			'active' => 'aktywne', 
-			'visible' => 'widoczne', 
-			'created' => 'nowe', 
-			'closed' => 'zakończone', 
-			'waiting'  => 'oczekujące', 
-			'rejected' => 'odrzucone', 
-			'banned' => 'usunięte' 
-		}
+			'waiting'  => 'oczekujące',
+			'visible' => 'widoczne',
+			'closed' => 'zakończone',
+		} 
+		if admin == true
+			return statuses.merge({
+				'created' => 'nowe',
+				'rejected' => 'odrzucone', 
+				'banned' => 'usunięte' 
+			})
+		end
+		statuses
 	end
 
 	def Bet.order_names

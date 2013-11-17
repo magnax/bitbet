@@ -1,0 +1,10 @@
+<% bids = current_user.bids.for_bet(bet) %>
+<% if !bids.nil? && bids.any? %>
+    <div class="bids">
+        <% bids.each do |bid| %>
+            <span class="bid_amount <%= bid.positive ? 'agree' : 'disagree' %>">
+                <%= view_as_btc(bid.amount, 2) %>
+            </span>
+        <% end %>
+    </div>
+<% end %>

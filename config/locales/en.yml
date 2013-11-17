@@ -21,3 +21,14 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      bid:
+        amount_in_stc: "Amount"
+    errors:
+      models:
+        bid:
+          attributes:
+            amount_in_stc:
+              blank: "must be proper numeric value"
+              exclusion: "must be proper numeric value"
