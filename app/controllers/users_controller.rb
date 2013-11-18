@@ -1,4 +1,4 @@
-#encoding = uft8
+#encoding = utf8
 class UsersController < ApplicationController
 before_action :signed_in_user, only: [:show]
 before_action :bitcoin_client, only: [ :withdrawal_address, :deposit_address ]
