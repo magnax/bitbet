@@ -24,6 +24,7 @@ pl:
             email:
               blank: "nie może być pusty"
               invalid: "ma nieprawidłowy format"
+              taken: "jest już zajęty"
             password:
               blank: "nie może być puste"
               too_short: "za krótkie"
