@@ -1,10 +1,14 @@
 BitbetTk::Application.routes.draw do
 
   get "accounts/create"
-  get "admin/menu"
-  get "admin/info"
+  
   #root path
   root "static_pages#index"
+
+  #admin routes
+  get "admin/menu"
+  match "/admin/:action", to: "admin##{:action}", via: 'get'
+  match "/admin/account_fix/:id", to: "admin#account_fix", via: 'get', as: 'admin_account_fix'
 
   get "bids/new"
   get "bids/create"

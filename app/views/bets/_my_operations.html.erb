@@ -2,9 +2,9 @@
 <% if operations.any? %>    
     <% operations.each do |op| %>
         <div class="my_bet">
-            <%= op.created_at %> <span class="operation_amount <%= op.type %>"><%= view_as_btc(abs(op.amount, 5), 5) %> BTC</span>
-            <% if op.type %>
-                <%= Operation.types[op.type] %> 
+            <%= op.created_at %> <span class="operation_amount <%= op.operation_type %>"><%= view_as_btc(op.amount, 5) %> BTC</span>
+            <% if op.operation_type %>
+                <%= Operation.types[op.operation_type] %> 
                 <% if op.bet_id %>
                     <%= link_to "Zdarzenie #{op.bet_id}", bet(op.bet_id) %>
                 <% else %>

@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+include BitcoinHelper
+
 before_save { self.email = email.downcase }
 before_create :create_remember_token
 
@@ -10,11 +12,17 @@ VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 has_secure_password
 validates :password, length: { minimum: 6 }
 
-#bets in which user participating
+#bets created by user
 has_many :bets
+
 has_many :bids
+
+#bets in which user participating
 has_many :bidded_bets, through: :bids, source: :bet
+
 has_many :accounts
+
+has_many :operations
 
 def User.new_remember_token
 	SecureRandom.urlsafe_base64
@@ -25,11 +33,11 @@ def User.encrypt(token)
 end
 
 def available_funds
-	666600000
+	operations.incomings.sum(:amount) - frozen_funds
 end
 
 def frozen_funds
-	566600000
+	bidded_bets.visible.sum('bids.amount')
 end
 
 def deposit_address
@@ -38,6 +46,10 @@ end
 
 def withdrawal_address
 	accounts.withdraw.any? ? accounts.withdraw.first.nr : nil
+end
+
+def bc_account
+	bc.getaccount(deposit_address)
 end
 
 def referrals
@@ -65,7 +77,7 @@ def rejected_bets
 end
 
 def active_bids
-	bidded_bets.active.group(:bet_id)
+	bidded_bets.visible.group(:bet_id)
 end
 
 def closed_bids
@@ -73,7 +85,7 @@ def closed_bids
 end
 
 def deposits
-	[]
+	operations.incomings
 end
 
 def withdrawals

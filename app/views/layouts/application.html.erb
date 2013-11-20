@@ -15,7 +15,7 @@
         <% flash.each do |key, value| %>
           <div class="alert alert-<%= key %>"><%= value %></div>
         <% end %>
-        <article>
+        <article class="<%= "no_aside" if yield(:aside).empty? %>">
         	<%= yield %>
     	  </article>
         <%= render aside_for(yield(:aside)) unless yield(:aside).empty? %>

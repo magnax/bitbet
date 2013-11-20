@@ -23,7 +23,7 @@ def create
 			flash[:notice] = "Nie udało się utworzyć adresu depozytowego"
 		end
 		flash[:success] = "Twoje konto użytkownika zostało utworzone. Jesteś zalogowany"
-		redirect_to root_path 
+		redirect_to root_path and return
 	end
 	render 'new'
 end
@@ -41,6 +41,7 @@ def deposit_address
 	account.account_type = "deposit"
 	account.nr = bc.getnewaddress
 	if account.save
+		bc.setaccount(account.nr, "user_#{current_user.id}")
 		flash[:success] = "Pomyślnie przydzielono nowy adres depozytowy!" 
 	else
 		flash[:error] = "Nie udało się przydzielić nowego adresu!" 

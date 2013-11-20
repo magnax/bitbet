@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131116223006) do
+ActiveRecord::Schema.define(version: 20131119193638) do
 
   create_table "accounts", force: true do |t|
     t.integer  "user_id"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 20131116223006) do
     t.integer  "amount"
     t.integer  "account_id"
     t.integer  "bet_id"
-    t.string   "type"
+    t.string   "operation_type"
     t.string   "txid"
     t.integer  "time"
     t.integer  "timereceived"

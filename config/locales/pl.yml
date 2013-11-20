@@ -27,10 +27,10 @@ pl:
               taken: "jest już zajęty"
             password:
               blank: "nie może być puste"
-              too_short: "za krótkie"
+              too_short: "za krótkie, minimum %{count} znaków"
             password_confirmation:
-              confirmation: "musi być takie samo jak hasło"
               blank: "nie może być puste"
+              confirmation: "musi być takie samo jak hasło"
         account:
           attributes:
             nr:
@@ -42,3 +42,8 @@ pl:
       x_days: "%{count} dni"
       about_x_months: "około %{count} m-cy"
       about_x_hours: "około %{count} godzin"
+  error:
+    zero: "brak błędów"
+    one: "1 błąd"
+    few: "%{count} błędy"
+    other: "%{count} błędów"

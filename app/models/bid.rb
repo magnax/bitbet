@@ -10,6 +10,7 @@ belongs_to :bet
 scope :positive, lambda { where('bids.positive = ?', true) }
 scope :negative, lambda { where('bids.positive = ?', false) }
 scope :for_bet, lambda { |id| where('bids.bet_id = ?', id) }
+scope :include_bets, lambda { joins(:bet) }
 
 def amount_in_stc=(value)
   	s = value.to_s.gsub(',', '.')
