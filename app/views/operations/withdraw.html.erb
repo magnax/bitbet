@@ -1,0 +1,12 @@
+<h1>Wypłata BTC</h1>
+<p>Dostępne środki: <%= view_as_btc(current_user.available_funds, 5) %> BTC</p>
+<%= form_for @operation do |f| %>
+	<%= render 'shared/error_messages', :object => @operation %>
+	<div class="field">
+		<%= f.label :amount_in_stc, "Kwota:", class: "control-label" %>
+		<%= f.text_field :amount_in_stc %> BTC
+	</div>
+	<div class="actions">
+		<%= f.submit "Wypłać" %>
+	</div>
+<% end %>

@@ -3,7 +3,9 @@ pl:
   activerecord:
     attributes:
       bid:
-        amount_in_stc: "E-mail address"
+        amount_in_stc: "Kwota"
+      operation:
+        amount_in_stc: "Kwota"
       user:
         name: "Nazwa użytkownika"
         email: "Adres e-mail"
@@ -17,6 +19,11 @@ pl:
           attributes:
             amount_in_stc:
               blank: "wymagany"
+        operation:
+          attributes:
+            amount_in_stc:
+              exclusion: "musi być prawidłową liczbą (i większa od zera)"
+              exceed: "nie może przekraczać dostępnych środków"
         user:
           attributes:
             name:

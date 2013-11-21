@@ -338,9 +338,12 @@ input.btc_address {
 .operation_amount {
 	margin: 0 5px 0 15px;
 	text-shadow: 0 1px 0 rgba(255,255,255,0.7);
+	cursor: text;
 	&.receive {
 		color: #093;
-		cursor: text;
+	}
+	&.send {
+		color: #911;
 	}
 }
 

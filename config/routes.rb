@@ -1,5 +1,6 @@
 BitbetTk::Application.routes.draw do
 
+  get "operations/withdraw"
   get "accounts/create"
   
   #root path
@@ -29,6 +30,7 @@ BitbetTk::Application.routes.draw do
   match "/contact", to: "static_pages#contact", via: "get"
   match "/address", to: "users#withdrawal_address", via: "get", as: 'withdrawal_address'
   match "/deposit_address", to: "users#deposit_address", via: "get", as: 'deposit_address'
+  match "/withdraw", to: "operations#withdraw", via: "get", as: 'withdraw'
 
   match "/bets/:id/publish", to: "bets#publish", via: "get", as: 'publish'
   match "/bets/:id/reject", to: "bets#reject", via: "get", as: 'reject'
@@ -42,5 +44,6 @@ BitbetTk::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :accounts, only: [:new, :create]
+  resources :operations, only: [:create]
 
 end

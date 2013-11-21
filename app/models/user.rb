@@ -33,7 +33,7 @@ def User.encrypt(token)
 end
 
 def available_funds
-	operations.incomings.sum(:amount) - frozen_funds
+	operations.incomings.sum(:amount) - operations.outgoings.sum(:amount) - frozen_funds
 end
 
 def frozen_funds
@@ -89,7 +89,7 @@ def deposits
 end
 
 def withdrawals
-	[]
+	operations.outgoings
 end
 
 private

@@ -12,7 +12,13 @@ Adres do depozytów:
 <% end %>
 <br />
 Adres do wypłat: <strong><%= @user.withdrawal_address || '[brak adresu]' %></strong> <%= link_to "Zmień", withdrawal_address_path %><br />
-Dostępne środki: <strong><%= view_as_btc(@user.available_funds, 5) %> BTC</strong> <%= link_to "Wypłać", '#' %><br />
+Dostępne środki: <strong><%= view_as_btc(@user.available_funds, 5) %> BTC</strong>
+<% if @user.withdrawal_address %>
+    <%= link_to "Wypłać", withdraw_path %>
+<% else %>
+    <small> (żeby wypłacać, ustaw adres do wypłat)</small>
+<% end %>
+ <br />
 Środki zamrożone w zakładach: <strong><%= view_as_btc(@user.frozen_funds, 5) %> BTC</strong><br />
 Twój link: <input type="text" readonly="1" value="http://bitbet.tk/register?ref_id=<%= @user.id %>" class="selectOnClick ref_link" /> 
 <% if @user.referrals.count %>
