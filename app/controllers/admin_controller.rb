@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
 before_action :admin_user
-before_action :bitcoin_client, only: [ :info ]
+before_action :bitcoin_client, only: [ :info, :account_fix ]
 
 def menu
 end

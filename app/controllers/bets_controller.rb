@@ -1,7 +1,8 @@
 #encoding = utf-8
 class BetsController < ApplicationController
 before_action :signed_in_user, only: [:create, :new]
-before_action :admin_user, only: [:publish]
+before_action :admin_user, only: [:publish, :end_bet, :settle]
+before_action :bitcoin_client, only: [ :end_bet, :settle ]
 
   def index
   	@bets = Bet.for_display(params)
@@ -61,6 +62,20 @@ before_action :admin_user, only: [:publish]
   def destroy
     flash[:success] = "Usunięto zdarzenie! (ale tak naprawdę to jeszcze nie ma usuwania ;))"
     redirect_to root_path
+  end
+
+  def end_bet
+    @bet = Bet.find(params[:id])
+    if !@bet.visible?
+      redirect_to @bet, :flash => {:error => "Tego zdarzenia się nie rozlicza"}
+    end
+  end
+
+  def settle
+    @bet = Bet.find(params[:id])
+    @bet.settle(params[:positive] ? true : false)
+    flash[:success] = "Zdarzenie zostało zakończone"
+    redirect_to @bet
   end
 
   private

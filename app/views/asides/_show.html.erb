@@ -4,7 +4,7 @@
 	<% else %>
 		<%= render partial: "bets/status/#{@bet.status}", locals: { bet: @bet } %>
 	<% end %>
-	<% if current_user.bids.for_bet(@bet) %>
+	<% if current_user.bids.for_bet(@bet).any? %>
 		<h6>Tak obstawiałeś to zdarzenie:</h6>
 		<%= render partial: "bids/my_bids", locals: { bet: @bet } %>
 	<% end %>

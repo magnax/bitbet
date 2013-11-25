@@ -17,13 +17,23 @@ body {
 		float: right;
 		width: 30%;
 		color: #fff;
+		margin-bottom: 15px;
 		background-color: #f16529;
-		padding: 0px 3% 10px;
+		padding: 10px 3% 10px;
 		border-top: 5px solid #e44d26;
 		-webkit-box-shadow: 0 5px 10px #aaa;
 		-moz-box-shadow: 0 5px 10px #aaa;
 		box-shadow: 0 5px 10px #aaa;
 		text-shadow: 2px 2px 2px rgba(0,0,0,0.4);
+		a {
+			text-shadow: 1px 1px 0 rgb(197, 197, 197);
+			text-decoration: none;
+			font-weight: bold;
+			color: #600;
+			&:hover {
+				color: #900;
+			}
+		}
 		div.field {
 			.control-label {
 				float: left;
@@ -108,6 +118,7 @@ body {
 h3 {
 	font-size: 1.17em;
 	margin: 1em 0;
+	line-height: 1.2em;
 }
 
 h5 {
@@ -225,15 +236,11 @@ nav {
 	        background: #eed3d7;
 	    }
     }
-
-    
-    
     &:first-child {
     	a {
         	margin-left: 0;
     	}
     }
-
     &:last-child {
     	a {
         	margin-right: 0;
@@ -350,5 +357,36 @@ input.btc_address {
 article {
 	&.no_aside {
 		width: 98%;
+	}
+}
+
+.admin_button {
+	display: inline-block;
+	border: 1px solid #ccc;
+	padding: 2px 10px;
+	margin: 0 5px;
+	background: #149bdf;
+	border-radius: 6px;
+	color: #eee;
+	box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+	a {
+		color: #600;
+		text-decoration: none;
+	}
+	&:hover {
+	    background: #0066cc;
+	    color: #900;
+	}
+}
+
+.bet_status {
+	font-size: 0.7em;
+	margin-left: 10px;
+	font-weight: bold;
+	&.positive {
+		color: #093;
+	}
+	&.negative {
+		color: #c33;
 	}
 }

@@ -6,7 +6,7 @@
             <% if op.operation_type %>
                 <%= Operation.types[op.operation_type] %> 
                 <% if op.bet_id %>
-                    <%= link_to "Zdarzenie #{op.bet_id}", bet(op.bet_id) %>
+                    <%= link_to "Zdarzenie: #{op.bet.name[0..30]})", bet_path(op.bet_id) %>
                 <% else %>
                     <span class="operation_desc">ID: <%= op.txid %></span>
                 <% end %>

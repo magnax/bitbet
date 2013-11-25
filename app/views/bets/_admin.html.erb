@@ -1,13 +1,20 @@
-<% if bet.waiting? %>
- <%= link_to "Rozlicz", end_path(@bet) %>
+<% if bet.visible? && !bet.closed? %>
+	<span class="admin_button">
+ 		<%= link_to "Rozlicz", end_path(@bet) %>
+ 	</span>
+    <span class="admin_button">
+        <%= link_to "Zbanuj (usuń)", ban_path(@bet) %>
+    </span>        
 <% end %>
 <% if bet.created? %>
-	<%= link_to "Zatwierdź", publish_path(@bet) %> <%= link_to "Odrzuć", reject_path(@bet) %>
-<% elsif bet.visible? %>
-	<%= link_to "Zbanuj (usuń)", ban_path(@bet) %>
+    <span class="admin_button">
+	   <%= link_to "Zatwierdź", publish_path(@bet) %> <%= link_to "Odrzuć", reject_path(@bet) %>
+    </span> 
 <% end %>
 <% if bet.banned? || bet.closed? %>
- <%= link_to "Usuń z bazy", @bet, method: "delete" %>
+    <span class="admin_button">
+        <%= link_to "Usuń z bazy", @bet, method: "delete" %>
+    </span> 
 <% end %>
 <br />
 

@@ -35,7 +35,8 @@ BitbetTk::Application.routes.draw do
   match "/bets/:id/publish", to: "bets#publish", via: "get", as: 'publish'
   match "/bets/:id/reject", to: "bets#reject", via: "get", as: 'reject'
   match "/bets/:id/ban", to: "bets#ban", via: "get", as: 'ban'
-  match "/bets/:id/end", to: "bets#end", via: "get", as: 'end'
+  match "/bets/:id/end", to: "bets#end_bet", via: "get", as: 'end'
+  match "/bets/:id/settle", to: "bets#settle", via: "patch", as: 'settle'
   match "/bets/404", to: "bets#bet404", via: "get", as: "bet404"
 
   resources :bets do

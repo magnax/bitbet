@@ -6,6 +6,7 @@ validates :amount_in_stc, presence: true, exclusion: { in: [0] }
 validates_inclusion_of :positive, :in => [true, false]
 
 belongs_to :bet
+belongs_to :user
 
 scope :positive, lambda { where('bids.positive = ?', true) }
 scope :negative, lambda { where('bids.positive = ?', false) }

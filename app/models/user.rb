@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-include BitcoinHelper
+include Bitcoin
 
 before_save { self.email = email.downcase }
 before_create :create_remember_token
@@ -37,7 +37,7 @@ def available_funds
 end
 
 def frozen_funds
-	bidded_bets.visible.sum('bids.amount')
+	bidded_bets.open.sum('bids.amount')
 end
 
 def deposit_address
@@ -49,7 +49,11 @@ def withdrawal_address
 end
 
 def bc_account
-	bc.getaccount(deposit_address)
+	begin
+		bc.getaccount(deposit_address)
+	rescue Exception => e
+		nil
+	end
 end
 
 def referrals
@@ -69,15 +73,15 @@ def waiting_bets
 end
 
 def closed_bets
-	[]
+	bets.closed
 end
 
 def rejected_bets
-	[]
+	bets.rejected
 end
 
 def active_bids
-	bidded_bets.visible.group(:bet_id)
+	bidded_bets.open.group(:bet_id)
 end
 
 def closed_bids

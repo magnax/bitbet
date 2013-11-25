@@ -2,5 +2,10 @@
 	<h6><%= link_to bet.name, bet %></h6>
 	<%= render partial: "bets/mini_info", locals: { bet: bet } %>
 	<span class="category category_<%= bet.category_id %>"><%= bet.category.name; %></span>
+    <% if bet.settled? %>
+        <span class="bet_status <%= bet.positive ? 'positive' : 'negative' %>">
+            <%= bet.positive ? 'PRAWDA!' : 'FAŁSZ!' %>
+        </span>
+    <% end %>
 </div>
 <div class="line-divider"></div>
