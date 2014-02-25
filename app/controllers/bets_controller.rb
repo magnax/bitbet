@@ -1,14 +1,13 @@
 #encoding = utf-8
 class BetsController < ApplicationController
-before_action :signed_in_user, only: [:create, :new]
-before_action :admin_user, only: [:publish, :end_bet, :settle]
-before_action :bitcoin_client, only: [ :end_bet, :settle ]
+  before_action :signed_in_user, only: [:create, :new]
+  before_action :admin_user, only: [:publish, :end_bet, :settle]
+  before_action :bitcoin_client, only: [ :end_bet, :settle ]
 
   def index
   	@bets = Bet.for_display(params)
   	@status_names = Bet.status_names(current_user.admin?)
   	@order_names = Bet.order_names
-  	@categories = Category.all
   	@status = @status_names.keys.include?(params[:status]) ? @status_names[params[:status]] : 'widoczne'
   end
 
@@ -80,8 +79,8 @@ before_action :bitcoin_client, only: [ :end_bet, :settle ]
 
   private
 
-  	def bet_params
-  		params.require(:bet).permit(:name, :text, :category_id, :deadline, :event_at) 
-  	end
+	def bet_params
+		params.require(:bet).permit(:name, :text, :category_id, :deadline, :event_at) 
+	end
 
 end

@@ -16,13 +16,13 @@
 	</div>
 	<div class="field">
 		<%= f.label :deadline, "Zakłady do" %>
-		<%= f.text_field :deadline %>
+		<%= f.text_field :deadline, class: "datepick" %>
 	</div>
 	<div class="field">
 		<%= f.label :event_at, "Data zdarzenia" %>
-		<%= f.text_field :event_at %>
+		<%= f.text_field :event_at, class: "datepick" %>
 	</div>
 	<div class="actions">
-		<%= f.submit "Zapisz" %>
+		<%= f.submit "Zapisz", class: "btn btn-primary" %>
 	</div>
 <% end %>

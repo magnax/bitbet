@@ -1,5 +1,14 @@
 require 'spec_helper'
 
 describe Fee do
-  pending "add some examples to (or delete) #{__FILE__}"
+  
+  before do
+    mock_bitcoin
+    User.any_instance.stub(:create_bitcoin_account).and_return(true)
+    @fee = FactoryGirl.create(:fee)
+  end
+
+  subject { @fee }
+  
+  it { should be_valid }
 end

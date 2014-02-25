@@ -23,8 +23,8 @@ end
 
 def signed_in_user
 	unless signed_in?
-	  	store_location
-	  	redirect_to login_url, notice: "Zaloguj się, aby przejść do żądanej strony"
+  	store_location
+  	redirect_to login_url, notice: "Zaloguj się, aby przejść do żądanej strony"
 	end
 end
 
@@ -43,7 +43,7 @@ def redirect_back_or(default)
 end
 
 def admin_user
-  	redirect_to(root_url) unless current_user.admin?
+	redirect_to(root_url) unless current_user.admin?
 end
 
 end

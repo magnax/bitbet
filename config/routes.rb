@@ -4,7 +4,7 @@ BitbetTk::Application.routes.draw do
   get "accounts/create"
   
   #root path
-  root "static_pages#index"
+  root to: "static_pages#index"
 
   #admin routes
   get "admin/menu"
@@ -26,10 +26,9 @@ BitbetTk::Application.routes.draw do
   match '/password_reset', to: 'users#password_reset',     via: 'get'
   match '/profile',  to: 'users#show',         via: 'get'
   match "/faq", to: "static_pages#faq", via: "get"
-  match "/terms", to: "static_pages#terms", via: "get"
+  match "/terms", to: "static_pages#terms", via: "get", as: 'terms'
   match "/contact", to: "static_pages#contact", via: "get"
-  match "/address", to: "users#withdrawal_address", via: "get", as: 'withdrawal_address'
-  match "/deposit_address", to: "users#deposit_address", via: "get", as: 'deposit_address'
+  match "/deposit_address", to: "accounts#create_deposit_address", via: "get", as: 'deposit_address'
   match "/withdraw", to: "operations#withdraw", via: "get", as: 'withdraw'
 
   match "/bets/:id/publish", to: "bets#publish", via: "get", as: 'publish'

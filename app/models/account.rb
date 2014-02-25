@@ -13,10 +13,10 @@ scope :withdraw, lambda { where('accounts.account_type = ?', 'withdraw') }
 
 private
 
-	def valid_bitcoin_address
-		if !bc.validateaddress(nr)['isvalid']
-			errors.add(:nr, :not_valid)
-		end
+def valid_bitcoin_address
+	if !bc.validateaddress(nr)['isvalid']
+		errors.add(:nr, :not_valid)
 	end
+end
 
 end

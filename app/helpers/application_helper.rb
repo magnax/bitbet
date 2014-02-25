@@ -1,5 +1,4 @@
 module ApplicationHelper
-  # Returns the full title on a per-page basis.
   def full_title(page_title)
     base_title = "BitBet :: bet on bitcoin"
     if page_title.empty?
@@ -9,7 +8,6 @@ module ApplicationHelper
     end
   end
 
-  #returns aside partial name
   def aside_for(aside)
   	"asides/#{aside}"
   end

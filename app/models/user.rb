@@ -3,25 +3,22 @@ include Bitcoin
 
 before_save { self.email = email.downcase }
 before_create :create_remember_token
+after_create :create_bitcoin_account
 
 validates :name, presence: true, length: { maximum: 50 }
 VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-	validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },
-			uniqueness: { case_sensitive: false }
+validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },
+	uniqueness: { case_sensitive: false }
 
 has_secure_password
 validates :password, length: { minimum: 6 }
 
 #bets created by user
 has_many :bets
-
 has_many :bids
-
 #bets in which user participating
 has_many :bidded_bets, through: :bids, source: :bet
-
 has_many :accounts
-
 has_many :operations
 
 def User.new_remember_token
@@ -54,6 +51,10 @@ def bc_account
 	rescue Exception => e
 		nil
 	end
+end
+
+def build_account(params)
+	accounts.build(params)
 end
 
 def referrals
@@ -100,6 +101,18 @@ private
 
 def create_remember_token
 	self.remember_token = User.encrypt(User.new_remember_token)
+end
+
+def create_bitcoin_account
+	account = build_account({
+		:account_type => "deposit",
+		:nr => bc.getnewaddress
+	})
+	if account.save
+		bc.setaccount(account.nr, "user_#{@user.id}")
+	else
+		flash[:notice] = "Nie udało się utworzyć adresu depozytowego"
+	end
 end
 
 end

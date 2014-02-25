@@ -1,3 +1,4 @@
+#encoding = utf-8
 # config/locales/pl.yml
 pl:
   activerecord:
@@ -14,7 +15,21 @@ pl:
       account:
         nr: "Numer konta BTC"
     errors:
+      messages:
+        record_invalid: "Błędny rekord"
       models:
+        bet:
+          attributes:
+            name:
+              blank: "wymagane"
+            text:
+              blank: "wymagany"
+            category_id:
+              blank: "wymagany"
+            deadline:
+              blank: "wymagana"
+              too_late: "nie może być później niż data zdarzenia"
+              past: "nie może być datą w przeszłości"
         bid:
           attributes:
             amount_in_stc:
@@ -47,6 +62,7 @@ pl:
   datetime:
     distance_in_words:
       x_days: "%{count} dni"
+      x_months: "%{count} m-cy"
       about_x_months: "około %{count} m-cy"
       about_x_hours: "około %{count} godzin"
   error:

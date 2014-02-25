@@ -8,6 +8,7 @@ validate :available_funds
 
 belongs_to :user
 belongs_to :bet
+belongs_to :account
 
 default_scope  lambda { order('operations.created_at DESC') }
 scope :deposits, lambda { where('operations.operation_type = ?', 'receive') }

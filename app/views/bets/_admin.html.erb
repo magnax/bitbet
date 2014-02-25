@@ -8,7 +8,10 @@
 <% end %>
 <% if bet.created? %>
     <span class="admin_button">
-	   <%= link_to "Zatwierdź", publish_path(@bet) %> <%= link_to "Odrzuć", reject_path(@bet) %>
+	   <%= link_to "Zatwierdź", publish_path(@bet) %>
+    </span>
+    <span class="admin_button">
+        <%= link_to "Odrzuć", reject_path(@bet) %>
     </span> 
 <% end %>
 <% if bet.banned? || bet.closed? %>

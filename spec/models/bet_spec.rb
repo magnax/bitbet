@@ -2,7 +2,11 @@ require 'spec_helper'
 
 describe Bet do
 
-	before { @bet = FactoryGirl.create(:bet) }
+	before do 
+		Timecop.freeze(Date.parse("2013-11-15"))
+		User.any_instance.stub(:create_bitcoin_account).and_return(true)
+		@bet = FactoryGirl.create(:bet)
+	end
 
 	subject { @bet }
 
@@ -29,12 +33,6 @@ describe Bet do
 	end
 
 	describe "bet dates" do
-		before do
-			@time_now = Time.parse("Oct 25 2013")
-		  	Time.stub!(:now).and_return(@time_now)
-		  	@date_today = Date.parse("Oct 25 2013")
-		  	Date.stub!(:today).and_return(@date_today)
-		end
 
 		describe "deadline" do
 
@@ -57,7 +55,7 @@ describe Bet do
 			      	end
 			    end
 			    it "should be valid" do
-		    		dates = %w[2013-10-26 2013-11-26 2014-01-01]
+		    		dates = %w[2013-11-26 2014-01-01]
 		      		dates.each do |valid_date|
 			        	@bet.deadline = valid_date
 			        	@bet.event_at = "2014-01-10"
@@ -81,7 +79,7 @@ describe Bet do
 			end
 
 			describe "should not be valid when date is too far" do
-				before { @bet.event_at = "2014-10-26" }
+				before { @bet.event_at = "2015-03-26" }
 				it { should_not be_valid }
 			end
 

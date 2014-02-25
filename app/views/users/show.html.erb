@@ -3,15 +3,15 @@ Nazwa: <strong><%= @user.name %></strong> <%= link_to "Zmień hasło", '#' %><br
 Adres e-mail: <strong><%= @user.email; %></strong> <%= link_to "Zmień", '#' %><br />
 Adres do depozytów: 
 <% if @user.deposit_address %>
-    <input type="text" readonly="1" value="<%= @user.deposit_address %>" class="selectOnClick btc_address" />
-    <% if current_user.admin? %>
-        <%= link_to "Przypisz konto", admin_account_fix_path(@user) if @user.bc_account.nil? %>
-    <% end %>
+  <input type="text" readonly="1" value="<%= @user.deposit_address %>" class="selectOnClick btc_address" />
+  <% if current_user.admin? %>
+    <%= link_to "Przypisz konto", admin_account_fix_path(@user) if @user.bc_account.nil? %>
+  <% end %>
 <% else %>
     <%= link_to "Ustaw", deposit_address_path %>
 <% end %>
 <br />
-Adres do wypłat: <strong><%= @user.withdrawal_address || '[brak adresu]' %></strong> <%= link_to "Zmień", withdrawal_address_path %><br />
+Adres do wypłat: <strong><%= @user.withdrawal_address || '[brak adresu]' %></strong> <%= link_to "Zmień", new_account_path %><br />
 Dostępne środki: <strong><%= view_as_btc(@user.available_funds, 5) %> BTC</strong>
 <% if @user.withdrawal_address %>
     <%= link_to "Wypłać", withdraw_path %>

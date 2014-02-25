@@ -14,6 +14,26 @@ describe Bid do
 	it { should be_valid }
 	it { should respond_to(:amount_in_stc) }
 
+    describe "should not be valid without user_id" do
+        before { @bid.user_id = nil }
+        it { should_not be_valid }
+    end
+
+    describe "should not be valid without bet_id" do
+        before { @bid.bet_id = nil }
+        it { should_not be_valid }
+    end
+
+    describe "should not be valid without positive" do
+        before { @bid.positive = nil }
+        it { should_not be_valid }
+    end
+
+    describe "should be valid with positive set to 0" do
+        before { @bid.positive = 0 }
+        it { should be_valid }
+    end
+    
 	describe "should be invalid without amount" do
 		before { @bid.amount_in_stc = " " }
 		it { should_not be_valid }

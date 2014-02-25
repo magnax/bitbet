@@ -11,3 +11,12 @@ def sign_in(user, options={})
     click_button "Zaloguj się"
   end
 end
+
+def mock_bitcoin
+  bc_mock = double("bc")
+  bc_mock.stub(:validateaddress).with(any_args()).and_return({'isvalid' => true})
+  bc_mock.stub(:getnewaddress).and_return('1234')
+  bc_mock.stub(:setaccount).and_return(true)
+  bc_mock.stub(:move).with(any_args()).and_return(true)
+  RPC::JSON::Client.stub!(:new).and_return(bc_mock)
+end

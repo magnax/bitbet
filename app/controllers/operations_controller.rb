@@ -29,7 +29,7 @@ end
 
 private
 
-  	def operations_params
-  		params.require(:operation).permit(:user_id, :amount_in_stc) 
-  	end
+	def operations_params
+		params.require(:operation).permit(:user_id, :amount_in_stc) 
+	end
 end

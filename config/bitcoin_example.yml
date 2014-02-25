@@ -1,0 +1,5 @@
+host: 127.0.0.1
+port: 8332
+user: admin
+password: 1234
+version: 1.1

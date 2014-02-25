@@ -390,3 +390,36 @@ article {
 		color: #c33;
 	}
 }
+
+footer {
+	ul {
+    position: relative;
+    display: inline;
+    li {
+	    position: relative;
+	    list-style: none;
+	    float: left;
+	    display: inline;
+	    padding: 4px;
+	    margin: 0 10px;
+	    a {
+		    text-decoration: none;
+		    color: #eee;
+		    &:hover {
+				  color: #ccc;
+				}
+			}
+		}
+  }
+}
+
+.footer-container,
+.main aside {
+    border-top: 20px solid #e44d26;
+}
+
+.header-container,
+.footer-container,
+.main aside {
+    background: #f16529;
+}

@@ -18,6 +18,7 @@ include BetsHelper
 	scope :newest, lambda { order('created_at DESC') }
 
 	belongs_to :category
+	belongs_to :user
 	has_many :bids
 	has_many :participants, through: :bids, source: :user
 
@@ -117,71 +118,9 @@ include BetsHelper
 	end
 
 	def settle(positive)
-		self.closed_at = DateTime.now
-		self.positive = positive
-		if self.save(validate: false)
-			#łączna suma wygranych bidów
-			winning_sum = positive ? sum_positive : sum_negative
-			#łączna suma przegranych bidów
-			losing_sum = sum_total - winning_sum
-			#ogólna, wstępna prowizja (serwis, twórca)
-			interest_total = 0.10 * losing_sum
-			#prowizja dla serwisu
-			fee_amount = 0.05 * losing_sum
-			#suma do rozdziału dla wygrywających
-			sum_to_dispose = losing_sum - interest_total
-			#tabela dla sum wypłaconych poszczególnym obstawiającym
-			bidders = {}
-			self.participants.distinct.each do |p|
-				bidders[p.id] = 0
-			end
-			#pętla rozliczająca poszczególne obstawienia (bidy)
-			sum_of_wins = 0
-			bids.each do |b|
-				if b.positive == positive
-					#bid wygrywający
-					wins = b.amount.to_f / winning_sum * sum_to_dispose
-					bidders[b.user_id] += wins.to_i
-					sum_of_wins += wins.to_i
-				else
-					#bid przegrywający
-					bidders[b.user_id] -= b.amount
-					#bc.move "user_#{b.user_id}", "tmp_loss", stc_to_btc(b.amount)
-				end
-			end
-			#końcowa prowizja (uwzględnia zaokrąglenia)
-			end_interest = losing_sum - sum_of_wins
-			#przelew prowizji dla twórcy zdarzenia
-			creator_commission = 0.05 * losing_sum
-			operation = Operation.create( {
-				user_id: self.user_id,
-				amount: creator_commission.to_i,
-				bet_id: self.id,
-				operation_type: "commission" 
-			})
-			#pętla do przelewów dla poszczególnych obstawiających
-			bidders.each do |user_id, amount|
-				if amount > 0
-					#kwotę wygranej przenieść z konta systemowego na konto usera
-					#bc.move "tmp_loss", "user_#{b.user_id}", stc_to_btc(amount)
-					#typ operacji - wygrana ("prize")
-					operation_type = "prize"
-				else
-					#typ operacji - strata ("loss")
-					operation_type = "loss"
-				end
-				#zarejestrować operację w systemie
-				operation = Operation.create({
-					user_id: user_id,
-					amount: amount.to_i.abs,
-					bet_id: self.id,
-					operation_type: operation_type 
-				})
-			end
-			#prowizja dla serwisu
-			Fee.create({ bet_id: id, amount: fee_amount.to_i })
-			#bc.move "tmp_loss", "fees", stc_to_btc(fee_amount)
-		end			
+		close_and_save_with(positive)
+		bet_dispatcher = BetDispatcher.new(self)
+		bet_dispatcher.run
 	end
 
 private
@@ -208,25 +147,31 @@ private
 	end
 
 	def proper_deadline_date
-	    if deadline.present? && deadline <= Date.today
-	      errors.add(:deadline, "can't be in the past")
-	    end
-	    if deadline.present? && event_at.present?
-	    	if deadline > event_at
-	      		errors.add(:deadline, "can't be after event date")
-	      	elsif deadline == event_at
-	      		errors.add(:deadline, "can't be the same as event date")
-	     	end	      			
-	    end
+    if deadline.present? && deadline <= Date.today
+      errors.add(:deadline, :past)
+    end
+    if deadline.present? && event_at.present?
+    	if deadline > event_at
+    		errors.add(:deadline, :too_late)
+    	elsif deadline == event_at
+    		errors.add(:deadline, :the_same)
+     	end	      			
+    end
 	end
 
 	def proper_event_date
-	    if event_at.present? && event_at <= 3.days.ago.to_date
-	      errors.add(:event_at, "can't be in the past or less than 3 days from now")
-	    end
-	    if event_at.present? && event_at > 1.years.from_now.to_date
-	      errors.add(:event_at, "can't be more than a year from today")
-	    end
+    if event_at.present? && event_at <= 3.days.ago.to_date
+      errors.add(:event_at, "can't be in the past or less than 3 days from now")
+    end
+    if event_at.present? && event_at > 1.years.from_now.to_date
+      errors.add(:event_at, "can't be more than a year from today")
+    end
+	end
+
+	def close_and_save_with(positive)
+		self.closed_at = DateTime.now
+		self.positive = positive
+		return self.save(validate: false)
 	end
 
 end

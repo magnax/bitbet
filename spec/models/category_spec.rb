@@ -1,5 +1,9 @@
 require 'spec_helper'
 
 describe Category do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:category) { FactoryGirl.create(:category) }
+  
+  subject { category }
+
+  it { should be_valid }
 end

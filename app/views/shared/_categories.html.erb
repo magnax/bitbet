@@ -1,4 +1,4 @@
 <%= link_to "Wszystkie", "/bets/?#{query_string(params, 'category', nil)}" %>
-<% @categories.each do |c| %>
+<% Category.all.each do |c| %>
 	<%= link_to c.name, "/bets/?#{query_string(params, 'category', c.id)}" %>
 <% end %>
