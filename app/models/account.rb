@@ -1,5 +1,4 @@
 class Account < ActiveRecord::Base
-include BitcoinHelper
 
 validates :nr, presence: true
 validates_uniqueness_of :nr
@@ -14,9 +13,14 @@ scope :withdraw, lambda { where('accounts.account_type = ?', 'withdraw') }
 private
 
 def valid_bitcoin_address
-	if !bc.validateaddress(nr)['isvalid']
-		errors.add(:nr, :not_valid)
-	end
+  begin
+  	if !BitcoinClient.new.validateaddress(nr)['isvalid']
+  		errors.add(:nr, :not_valid)
+  	end
+  rescue BitcoinClient::ConnectionError => e
+    errors.add(:nr, :client_not_working)
+    raise e if account_type == 'deposit'
+  end
 end
 
 end

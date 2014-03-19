@@ -2,8 +2,7 @@ require 'spec_helper'
 
 describe "Settle bet by admin" do
   before do
-    mock_bitcoin
-    User.any_instance.stub(:create_bitcoin_account).and_return(true)
+    BitcoinClient.any_instance.stub(:move).with(any_args()).and_return('txid')
     @bet = FactoryGirl.create(:bet)
   end
 
@@ -27,9 +26,9 @@ describe "Settle bet by admin" do
   describe "with two proper bids" do
     before do
       @winner = FactoryGirl.create(:user)
-      loser = FactoryGirl.create(:user)
+      @loser = FactoryGirl.create(:user)
       FactoryGirl.create(:bid, bet: @bet, user: @winner, positive: true, amount_in_stc: 2)
-      FactoryGirl.create(:bid, bet: @bet, user: loser, positive: false, amount_in_stc: 1)
+      FactoryGirl.create(:bid, bet: @bet, user: @loser, positive: false, amount_in_stc: 1)
     end
     
     it "settles bet" do

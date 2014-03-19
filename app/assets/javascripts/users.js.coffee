@@ -1,3 +1,11 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+jQuery ->
+  $("#user_name").keyup ->
+    jQuery.get "/users/name_availability",
+      name: $(this).val()
+    , (html) ->
+      $("#name_available").html html
+      return
+
+    return
+
+  return

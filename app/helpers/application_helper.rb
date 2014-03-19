@@ -29,4 +29,11 @@ module ApplicationHelper
   	qs.join('&')
   end
 
+  def bitcoin_client
+    BitcoinClient.new
+  end
+
+  def redirect_with_error(errmsg)
+    redirect_to root_path, :flash => { :error => errmsg }
+  end
 end

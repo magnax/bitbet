@@ -3,8 +3,8 @@ FactoryGirl.define do
     user
     amount_in_stc 1
     account
-    bet
-    operation_type 'deposit'
+    bet nil
+    operation_type 'receive'
     txid nil
     time nil
     timereceived nil

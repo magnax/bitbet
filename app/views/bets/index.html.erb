@@ -1,4 +1,4 @@
-<h1>Zdarzenia</h1>
+<h1><%= t 'views.bets.index.title' %></h1>
 Status: <%= @status %>
 <div>Pokaż: <%= render partial: 'shared/querystring', locals: { key: 'status', object: @status_names } %></div>
 <div>Z kategorii: <%= render 'shared/categories' %></div>

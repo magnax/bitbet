@@ -9,14 +9,14 @@ def create
 		sign_in user
 		redirect_back_or profile_path
   else
-		flash.now[:error] = 'Invalid email/password combination' # Not quite right!
+		flash.now[:error] = I18n.t 'flash.error.login'
 		render 'new'
   end
 end
 
 def destroy
 	sign_out
-	redirect_to root_url
+	redirect_to root_url, flash: { notice: I18n.t('flash.notice.logout') }
 end 
 
 end

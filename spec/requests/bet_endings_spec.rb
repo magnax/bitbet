@@ -8,7 +8,8 @@ describe "BetEndings" do
   subject { page }
 
   before do
-    User.any_instance.stub(:create_bitcoin_account).and_return(true)
+    @bitcoin_client = BitcoinClient.new
+    BetsController.any_instance().stub(:bitcoin_client).and_return(@bitcoin_client)
     @user = FactoryGirl.create(:admin)
     sign_in @user
   end
@@ -16,18 +17,30 @@ describe "BetEndings" do
   describe "bets page" do
     it "should have button for ending bet" do
       visit bet_path bet
-      expect(page).to have_content "Rozlicz"
+      expect(page).to have_content "Settle"
     end
 
     context "bet settle" do
-      before { mock_bitcoin }
-      
+      before { visit end_path bet }
+
       it "should have options for ending bet" do
-        visit end_path bet
-        expect(page).to have_content "Wybierz opcję zakończenia tego zdarzenia"
+        expect(page).to have_content "Choose one option to settle this event"
         expect(page).to have_xpath("//input[@name='positive']" )
         expect(page).to have_xpath("//input[@name='negative']" )
       end
+
+      it "actually settles bet" do
+        BitcoinClient.any_instance.stub(:move).with(any_args()).and_return('txid')
+        click_button "Settle as TRUE"
+        expect(page).to have_content "Event was successfully settled"
+      end
     end
+  end
+
+  it "should not settle bet which is already closed" do
+    bet.closed_at = DateTime.parse("2013-11-25")
+    bet.save
+    visit end_path bet
+    expect(page).to have_content "This event cannot be settled"
   end
 end

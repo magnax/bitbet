@@ -1,10 +1,8 @@
 require 'spec_helper'
 
-describe Operation do
-  
+describe Operation do  
   before do
-    mock_bitcoin
-    User.any_instance.stub(:create_bitcoin_account).and_return(true)
+    Account.any_instance.stub(:valid_bitcoin_address).and_return(true)
     @operation = FactoryGirl.create(:operation)
   end
 

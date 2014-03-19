@@ -1,17 +1,20 @@
 class AdminController < ApplicationController
 before_action :admin_user
-before_action :bitcoin_client, only: [ :info, :account_fix ]
 
 def menu
 end
 
 def info
-	@address = bc.getinfo
+	begin
+		@address = bitcoin_client.getinfo
+	rescue BitcoinClient::ConnectionError
+		redirect_with_error I18n.t 'flash.error.client_error'
+	end
 end
 
 def transactions
 	@output = ["start"]
-	@accounts = bc.listaccounts
+	@accounts = bitcoin_client.listaccounts
 	@accounts.each do |account, balance|
 		if account.include?('user_')
 			@output.push "account: #{account}"
@@ -21,7 +24,7 @@ def transactions
 			last_transaction = Operation.deposits.where(:user_id => user_id).first
 			last_transaction_txid = last_transaction.nil? ? nil : last_transaction.txid
 			while next_transaction do
-				transaction = bc.listtransactions(account, 1, i)[0]
+				transaction = bitcoin_client.listtransactions(account, 1, i)[0]
 				if transaction.nil? || transaction['txid'] == last_transaction_txid
 					next_transaction = false
 					if transaction.nil?
@@ -62,7 +65,7 @@ end
 
 def account_fix
 	user = User.find(params[:id])
-	bc.setaccount(user.deposit_address, "user_#{user.id}")
+	bitcoin_client.setaccount(user.deposit_address, "user_#{user.id}")
 	redirect_to user
 end
 

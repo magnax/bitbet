@@ -11,7 +11,7 @@ module I18n::Backend::Pluralization
           n==1 ? :one : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? :few : :other
         when :cs, :sk # Czech, Slovak
           n==1 ? :one : (n>=2 && n<=4) ? :few : :other
-        when lt # Lithuanian
+        when :lt # Lithuanian
           n%10==1 && n%100!=11 ? :one : n%10>=2 && (n%100<10 || n%100>=20) ? :few : :other
         when :lv # Latvian
           n%10==1 && n%100!=11 ? :one : n != 0 ? :few : :other

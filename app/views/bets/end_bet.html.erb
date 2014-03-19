@@ -1,7 +1,7 @@
-<h3>Wybierz opcję zakończenia tego zdarzenia</h3>
+<h3><%= t 'views.bets.end_bet.title' %></h3>
 <%= form_for @bet, url: { action: "settle" } do |f| %>
 	<div class="actions">
-		<%= f.submit "Zakończ jako PRAWDA", { "name" => "positive", "class" => "admin_button" } %>
-		<%= f.submit "Zakończ jako FAŁSZ",  { "name" => "negative", "class" => "admin_button" }  %>
+		<%= f.submit I18n.t('views.bets.end_bet.settle_positive'), { "name" => "positive", "class" => "admin_button" } %>
+		<%= f.submit I18n.t('views.bets.end_bet.settle_negative'),  { "name" => "negative", "class" => "admin_button" }  %>
 	</div>
 <% end %>

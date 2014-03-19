@@ -85,4 +85,10 @@ SERVICE_FEE        = 0.05
       set_fee(fee_amount(sum_of_wins))
     end
   end
+
+  private
+
+  def bc
+    BitcoinClient.new
+  end
 end

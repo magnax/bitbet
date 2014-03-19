@@ -1,12 +1,12 @@
 #encoding = utf-8
 class BetsController < ApplicationController
   before_action :signed_in_user, only: [:create, :new]
-  before_action :admin_user, only: [:publish, :end_bet, :settle]
-  before_action :bitcoin_client, only: [ :end_bet, :settle ]
+  before_action :admin_user, only: [:publish, :ban, :reject, :destroy, :end_bet, :settle]
+  before_action :find_bet_by_id, except: [ :index, :new, :create, :bet404 ]
 
   def index
-  	@bets = Bet.for_display(params)
-  	@status_names = Bet.status_names(current_user.admin?)
+  	@bets = Bet.for_display(params.merge({ :user => current_user }))
+  	@status_names = Bet.status_names(current_user)
   	@order_names = Bet.order_names
   	@status = @status_names.keys.include?(params[:status]) ? @status_names[params[:status]] : 'widoczne'
   end
@@ -18,7 +18,7 @@ class BetsController < ApplicationController
   def create
   	@bet = current_user.bets.build(bet_params)
   	if @bet.save
-      flash[:success] = "Pomyślnie dodano nowe zdarzenie. Będzie widoczne po akceptacji."
+      flash[:success] = I18n.t 'flash.success.bet_added'
   		redirect_to root_path
   	else
   		render 'new'
@@ -26,7 +26,6 @@ class BetsController < ApplicationController
   end
 
   def show
-    @bet = Bet.find(params[:id])
     if @bet.visible? || current_user.admin?
       @bid = Bid.new(:bet => @bet)
     else
@@ -35,24 +34,21 @@ class BetsController < ApplicationController
   end
 
   def publish
-    bet = Bet.find(params[:id])
-    bet.publish!
-    flash[:success] = "Pomyślnie opublikowałeś zdarzenie!"
-    redirect_to bet
+    @bet.publish!
+    flash[:success] = I18n.t 'flash.success.bet_published'
+    redirect_to @bet
   end
 
   def ban
-    bet = Bet.find(params[:id])
-    bet.ban!
-    flash[:success] = "Zdarzenie zbanowane!"
-    redirect_to bet
+    @bet.ban!
+    flash[:success] = I18n.t 'flash.success.bet_banned'
+    redirect_to @bet
   end
 
   def reject
-    bet = Bet.find(params[:id])
-    bet.reject!
-    flash[:success] = "Zdarzenie odrzucone!"
-    redirect_to bet
+    @bet.reject!
+    flash[:success] = I18n.t 'flash.success.bet_rejected'
+    redirect_to @bet
   end
 
   def bet404
@@ -64,17 +60,12 @@ class BetsController < ApplicationController
   end
 
   def end_bet
-    @bet = Bet.find(params[:id])
-    if !@bet.visible?
-      redirect_to @bet, :flash => {:error => "Tego zdarzenia się nie rozlicza"}
-    end
+    redirect_to @bet, :flash => {:error => I18n.t('flash.error.cannot_settle') } if @bet.closed?
   end
 
   def settle
-    @bet = Bet.find(params[:id])
     @bet.settle(params[:positive] ? true : false)
-    flash[:success] = "Zdarzenie zostało zakończone"
-    redirect_to @bet
+    redirect_to @bet, :flash => { :success => I18n.t('flash.success.bet_settled') }
   end
 
   private
@@ -82,5 +73,10 @@ class BetsController < ApplicationController
 	def bet_params
 		params.require(:bet).permit(:name, :text, :category_id, :deadline, :event_at) 
 	end
+
+  def find_bet_by_id
+    @bet = Bet.find_by_id(params[:id])
+    redirect_to bet404_path unless @bet
+  end
 
 end

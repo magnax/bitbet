@@ -1,11 +1,12 @@
 class OperationsController < ApplicationController
-before_action :bitcoin_client, only: [:create]
+before_action :signed_in_user
+#before_action :bitcoin_client, only: [:create]
 
 def create
 	begin
 		@operation = current_user.operations.withdraws.build(operations_params)
 		if @operation.valid?
-			txid = bc.sendfrom(
+			txid = bitcoin_client.sendfrom(
 				"user_#{current_user.id}", 
 				current_user.withdrawal_address, 
 				@operation.amount_in_stc
@@ -14,11 +15,12 @@ def create
 			@operation.txid = txid
 			@operation.time = @operation.timereceived = DateTime.now
 			if @operation.save
-				redirect_to profile_path, flash: {success: "Wypłaciłeś pomyślnie kwotę #{@operation.amount_in_stc.to_s.gsub('.', ',')} BTC!"} and return
+				redirect_to profile_path, flash: {
+					success: I18n.t('flash.success.withdrawal_amount', amount: @operation.amount_in_stc.to_s.gsub('.', ',')) } and return
 			end		
 		end
-	rescue RPC::JSON::Client::Error => e
-		flash.now[:error] = "Operacja wypłaty nie powiodła się"
+	rescue BitcoinClient::ConnectionError
+		flash.now[:error] = I18n.t('flash.error.withdraw')
 	end
 	render 'withdraw'
 end

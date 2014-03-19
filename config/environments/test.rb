@@ -33,4 +33,7 @@ BitbetTk::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+
+  # set default english language for test
+  config.i18n.default_locale = :en
 end

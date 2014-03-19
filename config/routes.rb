@@ -7,7 +7,7 @@ BitbetTk::Application.routes.draw do
   root to: "static_pages#index"
 
   #admin routes
-  get "admin/menu"
+  get "admin/menu", via: 'get', as: 'admin'
   match "/admin/:action", to: "admin##{:action}", via: 'get'
   match "/admin/account_fix/:id", to: "admin#account_fix", via: 'get', as: 'admin_account_fix'
 
@@ -15,9 +15,7 @@ BitbetTk::Application.routes.draw do
   get "bids/create"
   get "bids_controller/new"
   get "bids_controller/create"
-  get "bets/index"
-  get "bets/create"
-
+  get "users/name_availability"
 
   #static pages paths
   match '/register',  to: 'users#new',            via: 'get'
@@ -36,7 +34,7 @@ BitbetTk::Application.routes.draw do
   match "/bets/:id/ban", to: "bets#ban", via: "get", as: 'ban'
   match "/bets/:id/end", to: "bets#end_bet", via: "get", as: 'end'
   match "/bets/:id/settle", to: "bets#settle", via: "patch", as: 'settle'
-  match "/bets/404", to: "bets#bet404", via: "get", as: "bet404"
+  match "/bets_404", to: "bets#bet404", via: "get", as: "bet404"
 
   resources :bets do
     resources :bids

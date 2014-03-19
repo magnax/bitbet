@@ -1,17 +1,17 @@
 <% if bet.visible? && !bet.closed? %>
 	<span class="admin_button">
- 		<%= link_to "Rozlicz", end_path(@bet) %>
+ 		<%= link_to I18n.t('views.bets.show.settle_link'), end_path(@bet) %>
  	</span>
     <span class="admin_button">
-        <%= link_to "Zbanuj (usuń)", ban_path(@bet) %>
+        <%= link_to I18n.t('views.bets.show.ban_link'), ban_path(@bet) %>
     </span>        
 <% end %>
 <% if bet.created? %>
     <span class="admin_button">
-	   <%= link_to "Zatwierdź", publish_path(@bet) %>
+	   <%= link_to I18n.t('views.bets.show.publish_link'), publish_path(@bet) %>
     </span>
     <span class="admin_button">
-        <%= link_to "Odrzuć", reject_path(@bet) %>
+        <%= link_to I18n.t('views.bets.show.reject_link'), reject_path(@bet) %>
     </span> 
 <% end %>
 <% if bet.banned? || bet.closed? %>

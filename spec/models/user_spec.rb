@@ -2,10 +2,7 @@ require 'spec_helper'
 
 describe User do
 
-  before do
-    User.any_instance.stub(:create_bitcoin_account).and_return(true)
-    @user = FactoryGirl.create(:user)
-  end
+  before { @user = FactoryGirl.create(:user) }
 
   subject { @user }
 
@@ -111,5 +108,4 @@ describe User do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
   end
-
 end

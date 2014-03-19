@@ -31,7 +31,7 @@ include BetsHelper
 	validate :proper_event_date
 
 	def Bet.for_display(params)
-		scope1 = status_names(true).keys.include?(params[:status]) ? Bet.send(params[:status]) : Bet.visible
+		scope1 = status_names(params[:user]).keys.include?(params[:status]) ? Bet.send(params[:status]) : Bet.visible
 		if scope1 && !params[:order].nil?
 			scope2 = Bet.send(params[:order])
 		end
@@ -125,14 +125,14 @@ include BetsHelper
 
 private
 
-	def Bet.status_names(admin)
+	def Bet.status_names(user)
 		statuses = { 
 			'active' => 'aktywne', 
 			'waiting'  => 'oczekujące',
 			'visible' => 'widoczne',
 			'closed' => 'zakończone',
 		} 
-		if admin == true
+		if !user.nil? && user.admin?
 			return statuses.merge({
 				'created' => 'nowe',
 				'rejected' => 'odrzucone', 

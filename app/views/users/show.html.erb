@@ -4,9 +4,6 @@ Adres e-mail: <strong><%= @user.email; %></strong> <%= link_to "Zmień", '#' %><
 Adres do depozytów: 
 <% if @user.deposit_address %>
   <input type="text" readonly="1" value="<%= @user.deposit_address %>" class="selectOnClick btc_address" />
-  <% if current_user.admin? %>
-    <%= link_to "Przypisz konto", admin_account_fix_path(@user) if @user.bc_account.nil? %>
-  <% end %>
 <% else %>
     <%= link_to "Ustaw", deposit_address_path %>
 <% end %>

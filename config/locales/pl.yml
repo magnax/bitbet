@@ -1,8 +1,16 @@
 #encoding = utf-8
 # config/locales/pl.yml
 pl:
+  available_funds: Dostępne środki
   activerecord:
     attributes:
+      account:
+        nr: Numer konta BTC
+      bet:
+        name: Nazwa zdarzenia
+        text: Opis zdarzenia
+        deadline: Zakłady do
+        event_at: Data zdarzenia
       bid:
         amount_in_stc: "Kwota"
       operation:
@@ -12,8 +20,11 @@ pl:
         email: "Adres e-mail"
         password: "Hasło"
         password_confirmation: "Potwierdzenie hasła"
-      account:
-        nr: "Numer konta BTC"
+      user:
+        name: Nazwa użytkownika
+        email: E-mail
+        password: Hasło
+        password_confirmation: Hasło ponownie
     errors:
       messages:
         record_invalid: "Błędny rekord"
@@ -42,11 +53,11 @@ pl:
         user:
           attributes:
             name:
-              blank: "nie może być pusta"
+              blank: nie może być pusta (2 - 50 znaków)
             email:
-              blank: "nie może być pusty"
-              invalid: "ma nieprawidłowy format"
-              taken: "jest już zajęty"
+              blank: nie może być pusty
+              invalid: ma nieprawidłowy format
+              taken: jest już zajęty
             password:
               blank: "nie może być puste"
               too_short: "za krótkie, minimum %{count} znaków"
@@ -56,9 +67,10 @@ pl:
         account:
           attributes:
             nr:
-              blank: "nie może być pusty"
-              not_valid: "nieprawidłowy"
-              taken: "jest już zajęty"
+              blank: nie może być pusty
+              not_valid: nieprawidłowy
+              taken: jest już zajęty
+              client_not_working: "nie może zostać ustawiony, gdy klient Bitcoin nie pracuje"
   datetime:
     distance_in_words:
       x_days: "%{count} dni"
@@ -70,3 +82,72 @@ pl:
     one: "1 błąd"
     few: "%{count} błędy"
     other: "%{count} błędów"
+  flash:
+    error:
+      cannot_settle: Tego zdarzenia się nie rozlicza
+      client_error: Klient Bitcoin nie pracuje
+      login: Nieprawidłowy użytkownik lub hasło
+      withdraw: Operacja wypłaty nie powiodła się
+      deposit_address: Nie udało się przydzielić nowego adresu!
+    success:
+      withdrawal_amount: Wypłaciłeś pomyślnie kwotę %{amount} BTC!
+      bet_added: Pomyślnie dodano nowe zdarzenie. Będzie widoczne po akceptacji.
+      user_created: Twoje konto użytkownika zostało utworzone. Jesteś zalogowany.
+      bet_banned: Zdarzenie zbanowane!
+      bet_published: Pomyślnie opublikowałeś zdarzenie!
+      bet_rejected: Zdarzenie odrzucone!
+      bet_settled: Zdarzenie zostało zakończone
+      deposit_address: Pomyślnie przydzielono nowy adres depozytowy!
+    notice:
+      address_changed: Zmieniono adres do wypłat
+      account_created: Utworzono nowe konto
+      user_account_failed: Nie udało się utworzyć konta bitcoin
+      logout: Poprawnie wylogowałeś się z serwisu
+  helpers:
+    label:
+      session:
+        name: Nazwa użytkownika
+        password: Hasło
+  views:
+    accounts:
+      new:
+        title: "Obecny adres do wypłat:"
+        none: brak
+        save_button: Zapisz
+    bets:
+      index:
+        title: Zdarzenia
+      new:
+        title: Twórz nowe zdarzenie
+        submit_button: Zapisz zdarznie
+      bet404:
+        title: Zdarzenie nie zostało znalezione!
+      end_bet:
+        title: Wybierz opcję zakończenia tego zdarzenia
+        settle_positive: Zakończ jako PRAWDA
+        settle_negative: Zakończ jako FAŁSZ
+      show:
+        publish_link: Zatwierdź
+        ban_link: Zbanuj (usuń)
+        reject_link: Odrzuć
+        settle_link: Rozlicz
+      status:
+        rejected: Event rejected
+    layout:
+      header:
+        logout_link: Wyloguj się
+    operations:
+      withdraw:
+        title: Wypłata BTC
+        submit_button: Wypłać
+    sessions:
+      new:
+        title: Zaloguj się
+        submit_button: Zaloguj się
+    shared:
+      errors:
+        title: Formularz zawiera
+    users:
+      new:
+        title: Zarejestruj się
+        submit_button: Zarejestruj

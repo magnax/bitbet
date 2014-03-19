@@ -1,9 +1,8 @@
 class User < ActiveRecord::Base
-include Bitcoin
+include BitcoinHelper
 
 before_save { self.email = email.downcase }
 before_create :create_remember_token
-after_create :create_bitcoin_account
 
 validates :name, presence: true, length: { maximum: 50 }
 VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -43,14 +42,6 @@ end
 
 def withdrawal_address
 	accounts.withdraw.any? ? accounts.withdraw.first.nr : nil
-end
-
-def bc_account
-	begin
-		bc.getaccount(deposit_address)
-	rescue Exception => e
-		nil
-	end
 end
 
 def build_account(params)
@@ -101,18 +92,6 @@ private
 
 def create_remember_token
 	self.remember_token = User.encrypt(User.new_remember_token)
-end
-
-def create_bitcoin_account
-	account = build_account({
-		:account_type => "deposit",
-		:nr => bc.getnewaddress
-	})
-	if account.save
-		bc.setaccount(account.nr, "user_#{@user.id}")
-	else
-		flash[:notice] = "Nie udało się utworzyć adresu depozytowego"
-	end
 end
 
 end

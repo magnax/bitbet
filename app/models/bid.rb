@@ -25,16 +25,4 @@ end
 def amount_in_stc
  	amount / 100000000.0 unless amount.nil?
 end
-
-private
-
-	def numeric(n) 
-		s = n.to_s.gsub(',', '.')
-		if s.to_i.to_s == s || s.to_f.to_s == s || s.to_f.to_s == "0" + s
-			s
-		else
-			nil
-		end
-	end
-
 end

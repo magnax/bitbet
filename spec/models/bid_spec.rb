@@ -2,12 +2,11 @@ require 'spec_helper'
 
 describe Bid do
   	
-  	before { @bid = Bid.new(
-  			user_id: 1,
-  			bet_id: 1,
-  			amount_in_stc: 1,
-  			positive: true
-  		) }
+	before { @bid = Bid.new(
+			user_id: 1,
+			bet_id: 1,
+			amount_in_stc: 1,
+			positive: true) }
 
 	subject { @bid }
 
@@ -44,16 +43,6 @@ describe Bid do
 		it { should_not be_valid }
 	end
 
-	describe "should be invalid with invalid amount" do
-		before { @bid.amount_in_stc = "asdfg" }
-		it { should_not be_valid }
-	end
-
-	describe "should be invalid with invalid amount" do
-		before { @bid.amount_in_stc = "3a" }
-		it { should_not be_valid }
-	end
-
 	describe "valid cases" do
 		its(:amount) { should eq 100_000_000 }
 
@@ -66,12 +55,13 @@ describe Bid do
 	    end
 	end
 
-	it "should be invalid" do
-		inputs = %w[0,,2 asdf 3a 3..3]
+  describe "invalid cases" do
+  	it "should be invalid" do
+  		inputs = %w[0,,2 asdf 3a 3..3]
   		inputs.each do |invalid_input|
         	@bid.amount_in_stc = invalid_input
         	expect(@bid).not_to be_valid
       	end
     end
-
+  end
 end

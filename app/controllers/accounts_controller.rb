@@ -1,6 +1,5 @@
 class AccountsController < ApplicationController
 before_action :signed_in_user
-before_action :bitcoin_client, only: [ :create ]
 
 def new
   @account = Account.new(:user => current_user)
@@ -9,22 +8,27 @@ end
 def create
 	@account = current_user.build_account(account_params.merge({ account_type: 'withdraw' }))
 	if @account.save
-		redirect_to profile_path, notice: "Zmieniono adres do wypłat"
+    msg = I18n.t 'flash.notice.account_created'
+		redirect_to profile_path, notice: msg
 	else
-		render :template => 'users/withdrawal_address'
-	end
+		render 'new'
+	end 
 end
 
 def create_deposit_address
-  account = current_user.build_account({
-    :account_type => "deposit",
-    :nr => bc.getnewaddress
-  })
-  if account.save
-    bc.setaccount(account.nr, "user_#{current_user.id}")
-    flash[:success] = "Pomyślnie przydzielono nowy adres depozytowy!" 
-  else
-    flash[:error] = "Nie udało się przydzielić nowego adresu!" 
+  begin
+    account = current_user.build_account({
+      :account_type => "deposit",
+      :nr => bitcoin_client.getnewaddress
+    })
+    if account.save
+      bitcoin_client.setaccount(account.nr, "user_#{current_user.id}")
+      flash[:success] = I18n.t 'flash.success.deposit_address'
+    else
+      flash[:error] = I18n.t 'flash.error.deposit_address'
+    end
+  rescue BitcoinClient::ConnectionError
+    redirect_with_error I18n.t 'flash.error.client_error' and return
   end
   redirect_to profile_path
 end

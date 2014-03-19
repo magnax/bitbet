@@ -7,9 +7,9 @@
 			    <%= current_user.name %>
 			    (<%= view_as_btc(current_user.available_funds, 5) %> BTC) 
 			    <% if current_user.admin? %>
-			     	<%= link_to "admin", admin_menu_path %>
+			     	<%= link_to "admin", admin_path %>
 			    <% end %>
-			    <%= link_to "wyloguj", logout_path, method: "delete" %>
+			    <%= link_to link_to I18n.t('views.layout.header.logout_link'), logout_path, method: "delete" %>
 			</div>
         <% end %>
         <div class="clear"></div>

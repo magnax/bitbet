@@ -25,6 +25,7 @@ gem 'jbuilder', '~> 1.2'
 group :development, :test do
   gem 'rspec-rails', '2.13.1'
   gem 'cucumber-rails', :require => false
+  gem 'simplecov', :require => false
   gem 'database_cleaner'
 end
 

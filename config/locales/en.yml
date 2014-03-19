@@ -20,15 +20,123 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  available_funds: Available funds
   activerecord:
     attributes:
+      account:
+        nr: BTC account number
+      bet:
+        name: Bet name
+        text: Description
+        deadline: Deadline
+        event_at: Event date
       bid:
-        amount_in_stc: "Amount"
+        amount_in_stc: Amount
+      operation:
+        amount_in_stc: Amount
+      user:
+        name: User name
+        email: E-mail
+        password: Password
+        password_confirmation: Password confirmation
     errors:
       models:
+        account:
+          attributes:
+            nr:
+              blank: cannot be empty
+              not_valid: is invalid
+              taken: is already taken
+              client_not_working: cannot be set when bitcoin client isn't working
         bid:
           attributes:
             amount_in_stc:
-              blank: "must be proper numeric value"
+              blank: must be proper numeric value
               exclusion: "must be proper numeric value"
+        operation:
+          attributes:
+            amount_in_stc:
+              exceed: Insufficient funds
+        user:
+          attributes:
+            name: 
+              blank: cannot be blank (2 - 50 chars required)
+  datetime:
+    distance_in_words:
+      x_days: "%{count} days"
+      x_months: "%{count} months"
+      about_x_months: "about %{count} months"
+      about_x_hours: "about %{count} hours"
+  error:
+    zero: "no errors"
+    one: "1 error"
+    other: "%{count} errors"
+  flash:
+    error:
+      cannot_settle: This event cannot be settled
+      client_error: Bitcoin client not working
+      login: Invalid username or password
+      withdraw: Error sending money from account
+      deposit_address: Error setting deposit address
+    success:
+      withdrawal_amount: Successfull withdrawal of %{amount} BTC!
+      bet_added: Successfully added new bet event. Will be visible after accepting by admin.
+      user_created: Your account was created. You're logged in.
+      bet_banned: Event was banned
+      bet_published: Event was successfully published
+      bet_rejected: Event rejected
+      bet_settled: Event was successfully settled
+      deposit_address: Deposit address was successfully set
+    notice:
+      address_changed: Withdrawal address changed
+      account_created: New account created
+      user_account_failed: Failed to create bitcoin account
+      logout: You are logged out
+  helpers:
+    label:
+      session:
+        name: Username
+        password: Password
+  views:
+    accounts:
+      new:
+        title: "Current withdrawal address:"
+        none: none
+        save_button: Save
+    bets:
+      index:
+        title: Events
+      new:
+        title: Create new event
+        submit_button: Save bet
+      bet404:
+        title: Event was not found!
+      end_bet:
+        title: Choose one option to settle this event
+        settle_positive: Settle as TRUE
+        settle_negative: Settle as FALSE
+      show:
+        publish_link: Publish
+        ban_link: Ban (delete)
+        reject_link: Reject
+        settle_link: Settle
+      status:
+        rejected: Event rejected
+    layout:
+      header:
+        logout_link: Logout
+    operations:
+      withdraw:
+        title: Withdraw BTC from account
+        submit_button: Withdraw
+    sessions:
+      new:
+        title: Sign in
+        submit_button: Login
+    shared:
+      errors:
+        title: Form contains
+    users:
+      new:
+        title: New user registration
+        submit_button: Register
