@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Category do
-  let(:category) { FactoryGirl.create(:category) }
+  let(:category) { Category.new(name: "Science") }
   
   subject { category }
 
