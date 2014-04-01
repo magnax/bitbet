@@ -9,24 +9,18 @@ module ApplicationHelper
   end
 
   def aside_for(aside)
-  	"asides/#{aside}"
+    "asides/#{aside}"
   end
 
   def query_string(params, key, value)
-  	qs = []
-  	if !params[:status].nil? || key == 'status'
-  		status = (key == 'status') ? value : params[:status]
-  		qs.append("status=#{status}") if !status.nil?
-  	end
-  	if !params[:order].nil? || key == 'order'
-  		order = (key == 'order') ? value : params[:order]
-  		qs.append("order=#{order}") if !order.nil?
-  	end
-  	if !params[:category].nil? || key == 'category'
-  		category = (key == 'category') ? value : params[:category]
-  		qs.append("category=#{category}") if !category.nil?
-  	end 
-  	qs.join('&')
+    qs = []
+    %w[status order category].each do |k|
+      if !params[k.to_sym].nil? || key == k
+        status = (key == k) ? value : params[k.to_sym]
+        qs.append("#{k}=#{status}") if !status.nil?
+      end
+    end
+    qs.join('&')
   end
 
   def bitcoin_client
