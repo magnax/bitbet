@@ -5,24 +5,24 @@ class BetsController < ApplicationController
   before_action :find_bet_by_id, except: [ :index, :new, :create, :bet404 ]
 
   def index
-  	@bets = Bet.for_display(params.merge({ :user => current_user }))
-  	@status_names = Bet.status_names(current_user)
-  	@order_names = Bet.order_names
-  	@status = @status_names.keys.include?(params[:status]) ? @status_names[params[:status]] : 'widoczne'
+    @bets = Bet.for_display(params.merge({ :user => current_user }))
+    @status_names = Bet.status_names(current_user)
+    @order_names = Bet.order_names
+    @status = @status_names.keys.include?(params[:status]) ? @status_names[params[:status]] : 'widoczne'
   end
 
   def new
-  	@bet = Bet.new
+    @bet = Bet.new
   end
 
   def create
-  	@bet = current_user.bets.build(bet_params)
-  	if @bet.save
+    @bet = current_user.bets.build(bet_params)
+    if @bet.save
       flash[:success] = I18n.t 'flash.success.bet_added'
-  		redirect_to root_path
-  	else
-  		render 'new'
-  	end
+      redirect_to root_path
+    else
+      render 'new'
+    end
   end
 
   def show
@@ -70,13 +70,12 @@ class BetsController < ApplicationController
 
   private
 
-	def bet_params
-		params.require(:bet).permit(:name, :text, :category_id, :deadline, :event_at) 
-	end
+  def bet_params
+    params.require(:bet).permit(:name, :text, :category_id, :deadline, :event_at)
+  end
 
   def find_bet_by_id
     @bet = Bet.find_by_id(params[:id])
     redirect_to bet404_path unless @bet
   end
-
 end

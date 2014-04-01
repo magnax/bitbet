@@ -1,7 +1,7 @@
 class StaticPagesController < ApplicationController
 
   def index
-  	@bets = Bet.active.limit(10)
+    @bets = Bet.active.limit(10)
   end
 
   def faq
