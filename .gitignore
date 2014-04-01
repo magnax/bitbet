@@ -17,3 +17,7 @@
 /config/database.yml
 /config/bitcoin.yml
 /coverage
+
+# Ignore environment config file
+/.env
+

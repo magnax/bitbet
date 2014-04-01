@@ -21,6 +21,7 @@ gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
+gem 'dotenv-rails'
 
 group :development, :test do
   gem 'rspec-rails', '2.13.1'
