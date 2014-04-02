@@ -1,8 +1,8 @@
 class Fee < ActiveRecord::Base
-include BitcoinHelper
+  include BitcoinHelper
 
-validate :amount_in_stc
+  validate :amount_in_stc
 
-belongs_to :bet
+  belongs_to :bet
 
 end
