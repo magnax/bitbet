@@ -10,13 +10,7 @@ class UsersController < ApplicationController
     if @user.save
       sign_in @user
       flash[:success] = I18n.t 'flash.success.user_created'
-      begin
-        unless bitcoin_client.create_user_account(@user)
-          flash[:notice] = I18n.t 'flash.notice.user_account_failed'
-        end
-      rescue BitcoinClient::ConnectionError
-        flash[:error] = I18n.t 'flash.error.client_error'
-      end
+      try_create_bitcoin_account(@user)
       redirect_to root_path
     else
       render 'new'
@@ -32,6 +26,16 @@ class UsersController < ApplicationController
   end
 
 private
+  
+  def try_create_bitcoin_account(user)
+    begin
+      unless bitcoin_client.create_user_account(user)
+        flash[:notice] = I18n.t 'flash.notice.user_account_failed'
+      end
+    rescue Bitcoin::ConnectionError
+      flash[:error] = I18n.t 'flash.error.client_error'
+    end
+  end
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation, :ref_id)
