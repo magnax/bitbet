@@ -88,6 +88,22 @@ class User < ActiveRecord::Base
     operations.outgoings
   end
 
+  def get_last_deposit_id
+    deposits.pluck(:txid)
+  end
+
+  def create_new_deposit(transaction)
+    operations.build(
+      :amount => (BigDecimal(transaction['amount'].to_s) * 100000000.0).to_i,
+      :account_id => nil,
+      :bet_id => nil,
+      :operation_type => 'receive',
+      :txid => transaction['txid'],
+      :time => transaction['time'],
+      :timereceived => transaction['timereceived']
+    )
+  end
+
   private
 
   def create_remember_token

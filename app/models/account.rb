@@ -10,14 +10,18 @@ class Account < ActiveRecord::Base
   scope :deposit, lambda { where('accounts.account_type = ?', 'deposit') }
   scope :withdraw, lambda { where('accounts.account_type = ?', 'withdraw') }
 
+  def bitcoin_client
+    Bitcoin::Client.new
+  end
+
   private
 
   def valid_bitcoin_address
     begin
-      if !BitcoinClient.new.validateaddress(nr)['isvalid']
+      if !bitcoin_client.validateaddress(nr)['isvalid']
         errors.add(:nr, :not_valid)
       end
-    rescue BitcoinClient::ConnectionError => e
+    rescue Bitcoin::ConnectionError => e
       errors.add(:nr, :client_not_working)
       raise e if account_type == 'deposit'
     end
