@@ -1,0 +1,54 @@
+{
+  "only_last_registered_transaction" :
+    [
+      [{
+        "account" : "user_1",
+        "txid" : "12345678"
+      }]
+    ],
+  "one_other_transaction" :
+    [
+      [{
+        "account" : "user_1",
+        "txid" : "12345677",
+        "category" : "send"
+      }]
+    ],
+  "not_enough_confirmations" :
+    [
+      [{
+        "account" : "user_1",
+        "txid" : "12345677",
+        "amount" : 0.60000000,
+        "category" : "receive",
+        "confirmations" : 0
+      }]
+    ],
+  "one_good_first_transaction" :
+  [
+    [{
+      "account" : "user_1",
+      "txid" : "12345678",
+      "amount" : 0.60000000,
+      "category" : "receive",
+      "confirmations" : 3
+    }]
+  ],
+  "two_unconfirmed_transactions" :
+  [
+    [{
+      "account" : "user_1",
+      "txid" : "12345679",
+      "amount" : 0.60000000,
+      "category" : "receive",
+      "confirmations" : 1
+    }],
+    [{
+      "account" : "user_1",
+      "txid" : "12345677",
+      "amount" : 0.10000000,
+      "category" : "receive",
+      "confirmations" : 2
+    }]
+  ]
+}

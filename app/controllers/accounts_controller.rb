@@ -27,7 +27,7 @@ class AccountsController < ApplicationController
       else
         flash[:error] = I18n.t 'flash.error.deposit_address'
       end
-    rescue BitcoinClient::ConnectionError
+    rescue Bitcoin::ConnectionError
       redirect_with_error I18n.t 'flash.error.client_error' and return
     end
     redirect_to profile_path
