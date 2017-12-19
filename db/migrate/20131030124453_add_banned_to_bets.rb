@@ -1,5 +1,5 @@
 class AddBannedToBets < ActiveRecord::Migration
   def change
-  	add_column :bets, :banned, :boolean, default: 0
+  	add_column :bets, :banned, :boolean, default: false
   end
 end
