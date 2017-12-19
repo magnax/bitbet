@@ -16,7 +16,7 @@ describe "User operations" do
     describe "withdrawal page" do
       before do
         Account.any_instance.stub(:valid_bitcoin_address).and_return(true)
-        @bitcoin_client = stub
+        @bitcoin_client = double
         user = FactoryGirl.create(:user)
         deposit = FactoryGirl.create(:operation, user: user)
         sign_in user
