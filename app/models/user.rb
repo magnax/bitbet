@@ -73,11 +73,11 @@ class User < ActiveRecord::Base
   end
 
   def active_bids
-    bidded_bets.open.group(:bet_id)
+    bidded_bets.open.group(:bet_id, 'bets.created_at')
   end
 
   def closed_bids
-    bidded_bets.closed.group(:bet_id)
+    bidded_bets.closed.group(:bet_id, 'bets.created_at')
   end
 
   def deposits

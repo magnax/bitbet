@@ -8,6 +8,8 @@ describe Bet do
                    deadline: Date.today + 17, event_at: Date.today + 20)
   end
 
+  after { Timecop.return }
+
   subject { @bet }
 
   it { should be_valid }

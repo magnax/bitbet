@@ -72,10 +72,9 @@ describe "Bets listing" do
     end
 
     it "can publish as admin" do
-      expect { 
-        click_link "Publish"
-        page.should have_content "Event was successfully published"
-      }.to change(Bet.visible, :count).by 1
+      click_link "Publish"
+      expect(page).to have_content "Event was successfully published"
+      expect(Bet.visible.count).to eq 1
     end
 
     describe "ban event" do
