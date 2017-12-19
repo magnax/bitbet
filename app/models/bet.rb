@@ -5,7 +5,7 @@ class Bet < ActiveRecord::Base
 
   default_scope lambda { order('bets.created_at DESC') }
 
-  scope :visible, lambda { where('bets.published_at IS NOT NULL and bets.banned = ?', 0) }
+  scope :visible, lambda { where('bets.published_at IS NOT NULL and bets.banned = ?', true) }
   scope :open, lambda { visible.where('bets.closed_at IS NULL') }
   scope :active, lambda { open.where('bets.deadline > ? and bets.closed_at IS NULL', Time.now.strftime("%Y-%m-%d")) }
   scope :waiting, lambda { open.where('bets.deadline <= ? and bets.closed_at IS NULL', Time.now.strftime("%Y-%m-%d")) }
