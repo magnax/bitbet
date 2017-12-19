@@ -14,7 +14,7 @@ describe "Bets listing" do
     end
 
     it "redirects to 404 on non-existent bet" do
-      get 'bets/666'
+      get '/bets/666'
       page.should redirect_to '/bets_404'
     end
   end
