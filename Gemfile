@@ -24,10 +24,9 @@ gem 'dotenv-rails'
 
 group :development, :test do
   gem 'pry-rails'
-  # gem 'pry-rescue'
-  # gem 'pry-byebug'
   gem 'test-unit'
-  gem 'rspec-rails', '2.14.1'
+  gem 'rspec-rails', '2.99'
+  gem 'rspec-its'
   gem 'cucumber-rails', :require => false
   gem 'simplecov', :require => false
   gem 'database_cleaner'
@@ -35,7 +34,7 @@ end
 
 group :test do
   gem 'selenium-webdriver', '2.35.1'
-  gem 'capybara', '2.1.0'
+  gem 'capybara'
   gem 'factory_girl_rails', '4.2.1'
   gem 'timecop'
   gem 'rspec-mocks'
