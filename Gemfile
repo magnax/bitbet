@@ -10,7 +10,7 @@ gem 'bcrypt-ruby', '3.0.1'
 gem 'faker', '1.1.2'
 gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
-gem 'pg'
+gem 'pg', '0.20'
 # Bitcoin Client 
 gem 'rpcjson', git: 'git@github.com:marko8904/rpcjson.git'
 gem 'whenever', :require => false
@@ -23,7 +23,8 @@ gem 'jbuilder', '~> 1.2'
 gem 'dotenv-rails'
 
 group :development, :test do
-  gem 'rspec-rails', '2.13.1'
+  gem 'test-unit'
+  gem 'rspec-rails', '2.14.1'
   gem 'cucumber-rails', :require => false
   gem 'simplecov', :require => false
   gem 'database_cleaner'
