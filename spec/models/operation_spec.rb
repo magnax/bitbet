@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Operation do  
   before do
-    Account.any_instance.stub(:valid_bitcoin_address).and_return(true)
+    allow_any_instance_of(Account).to receive(:valid_bitcoin_address).and_return(true)
     @operation = FactoryGirl.create(:operation)
   end
 

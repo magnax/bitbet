@@ -23,7 +23,7 @@ describe "Managing sessions" do
 
     it "should log out properly" do
       click_link "Logout"
-      page.should have_content "You are logged out"
+      expect(page).to have_content "You are logged out"
     end 
   end
 end

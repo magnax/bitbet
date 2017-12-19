@@ -4,18 +4,18 @@ describe "Bets listing" do
 
   it "shows list of bets" do
     visit bets_path
-    page.should have_content "Events"
+    expect(page).to have_content "Events"
   end
 
   context "for guest user" do
     it "redirects to login on new bet request" do
       visit new_bet_path
-      page.should have_content "Sign in"
+      expect(page).to have_content "Sign in"
     end
 
     it "redirects to 404 on non-existent bet" do
       get '/bets/666'
-      page.should redirect_to '/bets_404'
+      expect(page).to redirect_to '/bets_404'
     end
   end
 
@@ -28,7 +28,7 @@ describe "Bets listing" do
 
     it "shows new bet form" do
       visit new_bet_path
-      page.should have_content "Create new event"
+      expect(page).to have_content "Create new event"
     end
 
     it "creates new bet with valid inputs" do
@@ -40,7 +40,7 @@ describe "Bets listing" do
       fill_in "Deadline", with: Date.today + 7.days
       expect{ 
         click_button "Save bet"
-        page.should have_content "Successfully added new bet event"
+        expect(page).to have_content "Successfully added new bet event"
       }.to change(Bet, :count).by 1
     end
 
@@ -53,7 +53,7 @@ describe "Bets listing" do
     it "when bets is not visible" do
       @bet = FactoryGirl.create(:bet, user: FactoryGirl.create(:user))
       visit bet_path @bet
-      page.should have_content "Event was not found!"
+      expect(page).to have_content "Event was not found!"
     end
   end
 
@@ -67,8 +67,8 @@ describe "Bets listing" do
     end
 
     it "should be link to publish" do
-      page.should have_link "Publish"
-      page.should have_link "Reject"
+      expect(page).to have_link "Publish"
+      expect(page).to have_link "Reject"
     end
 
     it "can publish as admin" do
@@ -84,11 +84,11 @@ describe "Bets listing" do
       end
 
       it "ban" do
-        page.should have_link "Ban (delete)"
+        expect(page).to have_link "Ban (delete)"
 
         expect { 
           click_link "Ban (delete)"
-          page.should have_content "Event was banned"
+          expect(page).to have_content "Event was banned"
         }.to change(Bet.visible, :count).by -1
       end
     end
@@ -96,8 +96,8 @@ describe "Bets listing" do
     it "can reject event" do
       expect { 
         click_link "Reject"
-        page.should have_content "Event rejected"
-        page.should_not have_link "Reject"
+        expect(page).to have_content "Event rejected"
+        expect(page).to_not have_link "Reject"
       }.to_not change(Bet.visible, :count)
     end
   end

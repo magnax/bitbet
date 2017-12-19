@@ -22,7 +22,7 @@ describe Deposit::Check do
 
   context "when client is working" do
     it "runs" do
-       @deposit_check.check.should == ['start', 'end']
+       expect(@deposit_check.check).to eq ['start', 'end']
     end
 
     describe "skip not user (ie. technical) accounts" do
@@ -32,8 +32,7 @@ describe Deposit::Check do
       end
 
       it "outputs proper message" do
-        @deposit_check.check.should == 
-          ['start', "skip: ''", "skip: 'fees'", 'end']
+        expect(@deposit_check.check).to eq ['start', "skip: ''", "skip: 'fees'", 'end']
       end
     end
     
@@ -41,7 +40,7 @@ describe Deposit::Check do
       before do
         @fake_client.set_response_for('listaccounts', 
           { "user_1" => 0.04400000 })
-        Deposit::DepositUser.stub(:new).and_return(double(
+        allow(Deposit::DepositUser).to receive(:new).and_return(double(
           :get_last_deposit_id => '12345678'))
       end
 
@@ -51,7 +50,7 @@ describe Deposit::Check do
         end
 
         it "outputs proper message" do
-          @deposit_check.check.should include("account: 'user_1'", 
+          expect(@deposit_check.check).to include("account: 'user_1'", 
             "-- no transactions for 'user_1' --")
         end
       end
@@ -60,7 +59,7 @@ describe Deposit::Check do
         before { set_fake_client_response :only_last_registered_transaction }
 
         it "outputs proper message" do
-          @deposit_check.check.should include(
+          expect(@deposit_check.check).to include(
             "account: 'user_1'", "-- existing transaction met --")
         end
       end
@@ -69,7 +68,7 @@ describe Deposit::Check do
         before { set_fake_client_response :one_other_transaction }
 
         it "outputs proper message" do
-          @deposit_check.check.should == [
+          expect(@deposit_check.check).to eq [
             'start', "account: 'user_1'", 
             "-- end of transactions for 'user_1' --", 
             "-- end 'user_1'", "end"]
@@ -80,7 +79,7 @@ describe Deposit::Check do
         before { set_fake_client_response :not_enough_confirmations }
 
         it "outputs proper message" do
-          @deposit_check.check.should include(
+          expect(@deposit_check.check).to include(
             "account: 'user_1'", 
             "-- not enough confirmations (0/3) for 0.6 BTC --")
         end
@@ -89,12 +88,12 @@ describe Deposit::Check do
       describe "saving first transaction" do
         before do 
           set_fake_client_response :one_good_first_transaction
-          Deposit::DepositUser.stub(:new).and_return(double(
+          allow(Deposit::DepositUser).to receive(:new).and_return(double(
             :get_last_deposit_id => nil, :create_new_deposit => true))
         end
 
         it "outputs proper message" do
-          @deposit_check.check.should include(
+          expect(@deposit_check.check).to include(
             "account: 'user_1'", 
             "-- deposited 0.6 BTC for 'user_1' --")
         end
@@ -103,12 +102,12 @@ describe Deposit::Check do
       describe "skip two transactions with not enough confirmations" do
         before do 
           set_fake_client_response :two_unconfirmed_transactions
-          Deposit::DepositUser.stub(:new).and_return(double(
+          allow(Deposit::DepositUser).to receive(:new).and_return(double(
             :get_last_deposit_id => nil))
         end
 
         it "outputs proper message" do
-          @deposit_check.check.should include(
+         expect( @deposit_check.check).to include(
             "account: 'user_1'", 
             "-- not enough confirmations (1/3) for 0.6 BTC --",
             "-- not enough confirmations (2/3) for 0.1 BTC --")

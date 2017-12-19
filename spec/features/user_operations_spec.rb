@@ -15,7 +15,7 @@ describe "User operations" do
 
     describe "withdrawal page" do
       before do
-        Account.any_instance.stub(:valid_bitcoin_address).and_return(true)
+        allow_any_instance_of(Account).to receive(:valid_bitcoin_address).and_return(true)
         @bitcoin_client = double
         user = FactoryGirl.create(:user)
         deposit = FactoryGirl.create(:operation, user: user)
@@ -28,30 +28,30 @@ describe "User operations" do
 
       describe "withdraw submit with sufficient funds" do
         before do
-          @bitcoin_client.stub(:sendfrom).with(any_args()).and_return('abcde')
-          OperationsController.any_instance.stub(:bitcoin_client).and_return(@bitcoin_client)
+          allow(@bitcoin_client).to receive(:sendfrom).with(any_args()).and_return('abcde')
+          allow_any_instance_of(OperationsController).to receive(:bitcoin_client).and_return(@bitcoin_client)
           fill_in "Amount", with: "0,9"
         end
 
         it "sends money from account" do
           expect { 
             click_button "Withdraw" 
-            page.should have_content "Successfull withdrawal of 0,9 BTC!"
+            expect(page).to have_content "Successfull withdrawal of 0,9 BTC!"
           }.to change(Operation, :count).by 1
         end
       end
 
       describe "withdraw submit with insufficient funds" do
         before do
-          @bitcoin_client.stub(:sendfrom).with(any_args()).and_return('abcde')
-          OperationsController.any_instance.stub(:bitcoin_client).and_return(@bitcoin_client)
+          allow(@bitcoin_client).to receive(:sendfrom).with(any_args()).and_return('abcde')
+          allow_any_instance_of(OperationsController).to receive(:bitcoin_client).and_return(@bitcoin_client)
           fill_in "Amount", with: "2"
         end
 
         it "sends money from account" do
           expect { 
             click_button "Withdraw" 
-            page.should have_content "Insufficient funds"
+            expect(page).to have_content "Insufficient funds"
           }.to_not change(Operation, :count)
         end
       end
@@ -59,15 +59,15 @@ describe "User operations" do
       describe "withdraw error" do
         before do
           @bitcoin_client = BitcoinClient.new
-          @bitcoin_client.stub(:sendfrom).and_raise(BitcoinClient::ConnectionError)
-          OperationsController.any_instance.stub(:bitcoin_client).and_return(@bitcoin_client)
+          allow(@bitcoin_client).to receive(:sendfrom).and_raise(BitcoinClient::ConnectionError)
+          allow_any_instance_of(OperationsController).to receive(:bitcoin_client).and_return(@bitcoin_client)
           fill_in "Amount", with: "0,4"
         end
 
         it "sends money from account" do
           expect { 
             click_button "Withdraw" 
-            page.should have_content "Error sending money from account"
+            expect(page).to have_content "Error sending money from account"
           }.to_not change(Operation, :count)
         end
       end

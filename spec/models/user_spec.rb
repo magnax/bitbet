@@ -67,7 +67,7 @@ describe User do
   end
 
   it "is invalid when email address is already taken" do
-    FactoryGirl.build(:user, email: @user.email).should_not be_valid
+    expect(FactoryGirl.build(:user, email: @user.email)).to_not be_valid
   end
 
   describe "when password is not present" do

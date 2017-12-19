@@ -6,8 +6,8 @@ describe "Managing account" do
   let(:bitcoin_client) { Bitcoin::FakeClient.new }
 
   before do
-    AccountsController.any_instance().stub(
-      :bitcoin_client).and_return(bitcoin_client)
+    allow_any_instance_of(AccountsController)
+      .to receive(:bitcoin_client).and_return(bitcoin_client)
   end
 
   subject { page }
@@ -21,8 +21,8 @@ describe "Managing account" do
 
   context "signed in user" do
     before do
-      Account.any_instance().stub(
-        :bitcoin_client).and_return(bitcoin_client)
+      allow_any_instance_of(Account)
+        .to receive(:bitcoin_client).and_return(bitcoin_client)
       sign_in user
       visit new_account_path
     end
@@ -50,8 +50,8 @@ describe "Managing account" do
       it "don't create new address" do
         expect{
           click_button "Save"
-          page.should have_content "Current withdrawal address:"
-          page.should have_content "BTC account number is invalid"
+          expect(page).to have_content "Current withdrawal address:"
+          expect(page).to have_content "BTC account number is invalid"
         }.to_not change(Account, :count)
       end
     end
@@ -65,7 +65,7 @@ describe "Managing account" do
       it "don't create new address" do
         expect{
           click_button "Save"
-          page.should have_content "BTC account number cannot be set when bitcoin client isn't working"
+          expect(page).to have_content "BTC account number cannot be set when bitcoin client isn't working"
         }.to_not change(Account, :count)
       end
     end

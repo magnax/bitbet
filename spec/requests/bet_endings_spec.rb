@@ -10,7 +10,7 @@ describe "BetEndings" do
 
   before do
     @bitcoin_client = BitcoinClient.new
-    BetsController.any_instance().stub(:bitcoin_client).and_return(@bitcoin_client)
+    allow_any_instance_of(BetsController).to receive(:bitcoin_client).and_return(@bitcoin_client)
     @user = FactoryGirl.create(:admin)
     sign_in @user
   end
@@ -31,7 +31,7 @@ describe "BetEndings" do
       end
 
       it "actually settles bet" do
-        BitcoinClient.any_instance.stub(:move).with(any_args()).and_return('txid')
+        allow_any_instance_of(BitcoinClient).to receive(:move).with(any_args()).and_return('txid')
         click_button "Settle as TRUE"
         expect(page).to have_content "Event was successfully settled"
       end
