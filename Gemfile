@@ -23,6 +23,9 @@ gem 'jbuilder', '~> 1.2'
 gem 'dotenv-rails'
 
 group :development, :test do
+  gem 'pry-rails'
+  # gem 'pry-rescue'
+  # gem 'pry-byebug'
   gem 'test-unit'
   gem 'rspec-rails', '2.14.1'
   gem 'cucumber-rails', :require => false
