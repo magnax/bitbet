@@ -25,7 +25,7 @@ gem 'dotenv-rails'
 group :development, :test do
   gem 'pry-rails'
   gem 'test-unit'
-  gem 'rspec-rails', '2.99'
+  gem 'rspec-rails', '3.0'
   gem 'rspec-its'
   gem 'cucumber-rails', :require => false
   gem 'simplecov', :require => false
