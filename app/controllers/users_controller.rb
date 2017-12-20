@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :signed_in_user, only: [ :show ]
+  before_action :valid_bitcoin_client
 
   def new
     @user = User.new
@@ -25,16 +26,14 @@ class UsersController < ApplicationController
     render :text => ((User.find_by_name(params[:name])) ? "this name is not available" : "OK!")
   end
 
-private
+  private
   
   def try_create_bitcoin_account(user)
-    begin
-      unless bitcoin_client.create_user_account(user)
-        flash[:notice] = I18n.t 'flash.notice.user_account_failed'
-      end
-    rescue Bitcoin::ConnectionError
-      flash[:error] = I18n.t 'flash.error.client_error'
+    unless bitcoin_client.create_user_account(user)
+      flash[:notice] = I18n.t 'flash.notice.user_account_failed'
     end
+  rescue Bitcoin::ConnectionError
+    flash[:error] = I18n.t 'flash.error.client_error'
   end
 
   def user_params
