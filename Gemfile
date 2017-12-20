@@ -22,8 +22,16 @@ gem 'turbolinks'
 gem 'jbuilder'
 gem 'dotenv-rails'
 
+group :development do
+  gem 'web-console'
+  gem 'better_errors', '2.1.1'
+  gem "binding_of_caller"
+end
+
 group :development, :test do
   gem 'pry-rails'
+  gem 'pry-rescue'
+  gem 'pry-byebug'
   gem 'test-unit'
   gem 'rspec-rails'
   gem 'rspec-its'
