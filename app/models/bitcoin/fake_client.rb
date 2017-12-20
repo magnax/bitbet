@@ -4,7 +4,11 @@ module Bitcoin
   class FakeClient
     
     def initialize
-      @not_working = false
+      @working = true
+    end
+
+    def working?
+      @working
     end
 
     def set_response_for(method_name, response)
@@ -17,7 +21,7 @@ module Bitcoin
     end
 
     def disable
-      @not_working = true
+      @working = false
     end
 
     def getnewaddress
@@ -48,7 +52,7 @@ module Bitcoin
     private
 
     def raise_error
-      raise Bitcoin::ConnectionError, 'Bitcoin client not working!' if @not_working
+      raise Bitcoin::ConnectionError, 'Bitcoin client not working!' unless working?
     end
   end
 end

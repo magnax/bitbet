@@ -5,12 +5,16 @@ module Bitcoin
       begin
         @service = RPC::JSON::Client.new "http://#{JSON_RPC_CLIENT['user']}:#{JSON_RPC_CLIENT['password']}@#{JSON_RPC_CLIENT['host']}:#{JSON_RPC_CLIENT['port']}", JSON_RPC_CLIENT['version']
       rescue SystemCallError
-      #  @service = nil
+        @service = nil
       end
+    end
+    
+    def working?
+      @service.present?
     end
 
     def method_missing(method_name, *arguments)
-      raise ConnectionError unless @service
+      raise ConnectionError unless working?
       begin
         @service.send(method_name.to_s, *arguments)
       rescue SystemCallError
