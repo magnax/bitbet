@@ -178,6 +178,7 @@ GEM
       interception (>= 0.5)
       pry
     public_suffix (3.0.1)
+    puma (3.11.0)
     rack (1.6.8)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -311,6 +312,7 @@ DEPENDENCIES
   pry-byebug
   pry-rails
   pry-rescue
+  puma
   rails (= 4.2.8)
   rpcjson!
   rspec-its

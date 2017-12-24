@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.8'
 gem 'twitter-bootstrap-rails'
 gem 'jquery-rails'
@@ -21,6 +20,7 @@ gem 'therubyracer', platforms: :ruby
 gem 'turbolinks'
 gem 'jbuilder'
 gem 'dotenv-rails'
+gem 'puma'
 
 group :development do
   gem 'web-console'
