@@ -30,7 +30,7 @@ class AccountsController < ApplicationController
     rescue Bitcoin::ConnectionError
       redirect_with_error I18n.t 'flash.error.client_error' and return
     end
-    redirect_to profile_path
+    redirect_to user_path(current_user)
   end
 
 private

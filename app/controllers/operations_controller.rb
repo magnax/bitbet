@@ -14,7 +14,7 @@ class OperationsController < ApplicationController
         @operation.txid = txid
         @operation.time = @operation.timereceived = DateTime.now
         if @operation.save
-          redirect_to profile_path, flash: {
+          redirect_to user_path(current_user), flash: {
             success: I18n.t('flash.success.withdrawal_amount', amount: @operation.amount_in_stc.to_s.gsub('.', ',')) } and return
         end
       end
