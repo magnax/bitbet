@@ -37,7 +37,7 @@ BitbetTk::Application.routes.draw do
     resources :bids
   end
   resources :users, only: [:create, :new, :show] do
-    get :name_availability
+    get :name_availability, on: :collection
   end
   resources :sessions, only: [:new, :create, :destroy]
   resources :accounts, only: [:new, :create]
