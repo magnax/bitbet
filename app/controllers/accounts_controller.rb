@@ -9,7 +9,7 @@ class AccountsController < ApplicationController
     @account = current_user.build_account(account_params.merge({ account_type: 'withdraw' }))
     if @account.save
       msg = I18n.t 'flash.notice.account_created'
-      redirect_to profile_path, notice: msg
+      redirect_to user_path(current_user), notice: msg
     else
       render 'new'
     end

@@ -1,5 +1,5 @@
 <h1><%= t 'views.sessions.new.title' %></h1>
-Jeśli nie masz jeszcze konta, możesz się <%= link_to "zarejestrować", register_path %>.
+Jeśli nie masz jeszcze konta, możesz się <%= link_to "zarejestrować", new_user_path %>.
 Jeśli masz, zaloguj się:
 <%= form_for(:session, url: sessions_path) do |f| %>
     <div class="field">

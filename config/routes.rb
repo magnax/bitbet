@@ -15,14 +15,11 @@ BitbetTk::Application.routes.draw do
   get "bids/create"
   get "bids_controller/new"
   get "bids_controller/create"
-  get "users/name_availability"
 
   #static pages paths
-  match '/register',  to: 'users#new',            via: 'get'
   match '/login',  to: 'sessions#new',         via: 'get'
   match '/logout', to: 'sessions#destroy',     via: 'delete'
   match '/password_reset', to: 'users#password_reset',     via: 'get'
-  match '/profile',  to: 'users#show',         via: 'get'
   match "/faq", to: "static_pages#faq", via: "get"
   match "/terms", to: "static_pages#terms", via: "get", as: 'terms'
   match "/contact", to: "static_pages#contact", via: "get"
@@ -39,7 +36,9 @@ BitbetTk::Application.routes.draw do
   resources :bets do
     resources :bids
   end
-  resources :users
+  resources :users, only: [:create, :new, :show] do
+    get :name_availability
+  end
   resources :sessions, only: [:new, :create, :destroy]
   resources :accounts, only: [:new, :create]
   resources :operations, only: [:create]

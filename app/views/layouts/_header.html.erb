@@ -20,14 +20,14 @@
 			    <li><%= link_to "Utwórz", new_bet_path %></li>
 			    <% if signed_in? %>
 			        <li>
-			            <%= link_to "Profil", profile_path %>
+			            <%= link_to "Profil", user_path(current_user) %>
 			        </li>
 			    <% else %>
 			        <li>
 			            <%= link_to "Zaloguj", login_path %>
 			        </li>
 			        <li>
-			            <%= link_to "Rejestracja", register_path %>
+			            <%= link_to "Rejestracja", new_user_path %>
 			        </li>
 			    <% end %>
 			</ul>

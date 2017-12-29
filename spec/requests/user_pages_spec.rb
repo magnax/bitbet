@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe "User pages" do
-
   context "for guest user" do
     it "shows form for create new user" do
       visit new_user_path
