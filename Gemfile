@@ -16,7 +16,6 @@ gem 'rpcjson', git: 'git@github.com:marko8904/rpcjson.git'
 gem 'whenever', :require => false
 gem 'sass-rails'
 gem 'uglifier'
-gem 'coffee-rails'
 gem 'therubyracer', platforms: :ruby
 gem 'turbolinks'
 gem 'jbuilder'
