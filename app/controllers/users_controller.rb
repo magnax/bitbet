@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :signed_in_user, only: [ :show ]
+  before_action :signed_in_user, only: [:show]
   before_action :valid_bitcoin_client
 
   def new
@@ -23,7 +23,9 @@ class UsersController < ApplicationController
   end
 
   def name_availability
-    render :text => ((User.find_by_name(params[:name])) ? "this name is not available" : "OK!")
+    render json: {
+      text: ((User.find_by_name(params[:name])) ? "this name is not available" : "OK!")
+    }
   end
 
   private
