@@ -129,6 +129,20 @@ GEM
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     grease (0.3.1)
+    haml (5.0.4)
+      temple (>= 0.8.0)
+      tilt
+    haml-rails (1.0.0)
+      actionpack (>= 4.0.1)
+      activesupport (>= 4.0.1)
+      haml (>= 4.0.6, < 6.0)
+      html2haml (>= 1.0.1)
+      railties (>= 4.0.1)
+    html2haml (2.2.0)
+      erubis (~> 2.7.0)
+      haml (>= 4.0, < 6)
+      nokogiri (>= 1.6.0)
+      ruby_parser (~> 3.5)
     i18n (0.9.1)
       concurrent-ruby (~> 1.0)
     interception (0.5)
@@ -231,6 +245,8 @@ GEM
       rspec-mocks (~> 3.7.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.0)
+    ruby_parser (3.10.1)
+      sexp_processor (~> 4.9)
     rubyzip (1.2.1)
     sass (3.5.4)
       sass-listen (~> 4.0.0)
@@ -246,6 +262,7 @@ GEM
     selenium-webdriver (3.8.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
+    sexp_processor (4.10.0)
     simplecov (0.15.1)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
@@ -258,6 +275,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    temple (0.8.0)
     test-unit (3.2.7)
       power_assert
     therubyracer (0.12.3)
@@ -306,6 +324,7 @@ DEPENDENCIES
   dotenv-rails
   factory_girl_rails (= 4.2.1)
   faker
+  haml-rails
   jbuilder
   jquery-rails
   pg (= 0.20)
