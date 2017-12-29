@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.8'
-gem 'twitter-bootstrap-rails'
 gem 'jquery-rails'
 gem 'bootstrap-sass'
 gem 'haml-rails'
