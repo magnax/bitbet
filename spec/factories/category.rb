@@ -1,5 +1,5 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :category do
-    name "Science"
+    name { "Science" }
   end
 end

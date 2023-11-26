@@ -2,21 +2,21 @@ require 'spec_helper'
 
 describe Bet do
   before do
-    @bet = FactoryGirl.create(:published_bet)
-    @maniek = FactoryGirl.create(:user)
-    FactoryGirl.create(:operation, {
+    @bet = create(:published_bet)
+    @maniek = create(:user)
+    create(:operation, {
                          user_id: @maniek.id,
                          amount: 200_000_000,
                          operation_type: "receive"
                        })
-    @sid = FactoryGirl.create(:user)
-    FactoryGirl.create(:operation, {
+    @sid = create(:user)
+    create(:operation, {
                          user_id: @sid.id,
                          amount: 100_000_000,
                          operation_type: "receive"
                        })
-    @ella = FactoryGirl.create(:user)
-    FactoryGirl.create(:operation, {
+    @ella = create(:user)
+    create(:operation, {
                          user_id: @ella.id,
                          amount: 120_000_000,
                          operation_type: "receive"

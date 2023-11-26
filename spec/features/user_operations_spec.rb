@@ -16,8 +16,8 @@ describe "User operations" do
       before do
         allow_any_instance_of(Account).to receive(:valid_bitcoin_address).and_return(true)
         @bitcoin_client = double
-        user = FactoryGirl.create(:user)
-        FactoryGirl.create(:operation, user: user)
+        user = create(:user)
+        create(:operation, user: user)
         sign_in user
         visit withdraw_path
       end

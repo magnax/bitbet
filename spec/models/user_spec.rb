@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe User do
-  before { @user = FactoryGirl.create(:user) }
+  before { @user = create(:user) }
 
   subject { @user }
 
@@ -66,7 +66,7 @@ describe User do
   end
 
   it "is invalid when email address is already taken" do
-    expect(FactoryGirl.build(:user, email: @user.email)).to_not be_valid
+    expect(build(:user, email: @user.email)).to_not be_valid
   end
 
   describe "when password is not present" do

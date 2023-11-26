@@ -1,11 +1,11 @@
 Given(/^I have a published bet$/) do
-  @bet = FactoryGirl.create(:published_bet)
+  @bet = create(:published_bet)
   @bet.published_at.should == "2013-11-11 13:54:11"
   # RPC::JSON::Client.should_receive(:move).and_return(true)
 end
 
 Given(/^I am logged as admin$/) do
-  @user = FactoryGirl.create(:admin)
+  @user = create(:admin)
   visit login_path
   fill_in "Użytkownik", with: @user.name
   fill_in "Hasło", with: "111111"
@@ -24,8 +24,8 @@ end
 
 Given(/^I have a users with amounts:$/) do |table|
   table.raw.each do |name, amount|
-    bid_user = FactoryGirl.create(:user, { name: name })
-    FactoryGirl.create(:operation, {
+    bid_user = create(:user, { name: name })
+    create(:operation, {
                          user_id: bid_user.id,
                          amount: amount * 100_000_000,
                          operation_type: "receive"

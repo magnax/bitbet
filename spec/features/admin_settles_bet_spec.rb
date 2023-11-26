@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Settle bet by admin" do
   before do
     allow_any_instance_of(BitcoinClient).to receive(:move).with(any_args).and_return('txid')
-    @bet = FactoryGirl.create(:bet)
+    @bet = create(:bet)
   end
 
   it "settles empty bet" do
@@ -13,7 +13,7 @@ describe "Settle bet by admin" do
 
   describe "with one bid" do
     before do
-      FactoryGirl.create(:bid, bet: @bet)
+      create(:bid, bet: @bet)
     end
 
     it "settles bet" do
@@ -25,10 +25,10 @@ describe "Settle bet by admin" do
 
   describe "with two proper bids" do
     before do
-      @winner = FactoryGirl.create(:user)
-      @loser = FactoryGirl.create(:user)
-      FactoryGirl.create(:bid, bet: @bet, user: @winner, positive: true, amount_in_stc: 2)
-      FactoryGirl.create(:bid, bet: @bet, user: @loser, positive: false, amount_in_stc: 1)
+      @winner = create(:user)
+      @loser = create(:user)
+      create(:bid, bet: @bet, user: @winner, positive: true, amount_in_stc: 2)
+      create(:bid, bet: @bet, user: @loser, positive: false, amount_in_stc: 1)
     end
 
     it "settles bet" do

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "Managing account" do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
   let(:bitcoin_client) { Bitcoin::FakeClient.new }
 
   before do
@@ -77,7 +77,7 @@ describe "Managing account" do
 
       describe "when account cannot be saved" do
         before do
-          FactoryGirl.create(:account, account_type: "deposit", nr: "abcde")
+          create(:account, account_type: "deposit", nr: "abcde")
           visit deposit_address_path
         end
 

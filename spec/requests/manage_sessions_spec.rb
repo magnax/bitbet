@@ -16,7 +16,7 @@ describe "Managing sessions" do
 
   describe "Log out" do
     before do
-      @user = FactoryGirl.create(:user)
+      @user = create(:user)
       sign_in @user
     end
 

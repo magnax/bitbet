@@ -33,7 +33,7 @@ class Bet < ActiveRecord::Base
   def self.for_display(params)
     scope1 = status_names(params[:user]).keys.include?(params[:status]) ? Bet.send(params[:status]) : Bet.visible
     scope2 = Bet.send(params[:order]) if scope1 && !params[:order].nil?
-    merged = scope1&.merge(scope2)
+    merged = scope1&.merge(scope2) if scope2
     scope3 = Bet.where('category_id = ?', params[:category]) if merged && !params[:category].nil?
     merged ? merged.merge(scope3) : []
   end

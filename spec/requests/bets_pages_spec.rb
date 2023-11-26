@@ -20,8 +20,8 @@ describe "Bets listing" do
 
   context "for standard user" do
     before do
-      user = FactoryGirl.create(:user)
-      FactoryGirl.create(:category)
+      user = create(:user)
+      create(:category)
       sign_in user
     end
 
@@ -50,7 +50,7 @@ describe "Bets listing" do
     end
 
     it "when bets is not visible" do
-      @bet = FactoryGirl.create(:bet, user: FactoryGirl.create(:user))
+      @bet = create(:bet, user: create(:user))
       visit bet_path @bet
       expect(page).to have_content "Event was not found!"
     end
@@ -58,9 +58,9 @@ describe "Bets listing" do
 
   context "for admins" do
     before do
-      admin = FactoryGirl.create(:admin)
-      FactoryGirl.create(:category)
-      @bet = FactoryGirl.create(:bet, user: FactoryGirl.create(:user))
+      admin = create(:user, :admin)
+      create(:category)
+      @bet = create(:bet, user: create(:user))
       sign_in admin
       visit bet_path @bet
     end

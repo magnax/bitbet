@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "BetEndings" do
   Timecop.freeze(Date.parse("2013-11-10"))
-  let(:bet) { FactoryGirl.create(:published_bet) }
+  let(:bet) { create(:published_bet) }
   Timecop.return
 
   subject { page }
@@ -10,7 +10,7 @@ describe "BetEndings" do
   before do
     @bitcoin_client = BitcoinClient.new
     allow_any_instance_of(BetsController).to receive(:bitcoin_client).and_return(@bitcoin_client)
-    @user = FactoryGirl.create(:admin)
+    @user = create(:admin)
     sign_in @user
   end
 
