@@ -4,5 +4,4 @@ class Fee < ActiveRecord::Base
   validate :amount_in_stc
 
   belongs_to :bet
-
 end

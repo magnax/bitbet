@@ -1,21 +1,21 @@
-#encoding = utf-8
+# encoding = utf-8
 class Bet < ActiveRecord::Base
   include BitcoinHelper
   include BetsHelper
 
-  default_scope lambda { order('bets.created_at DESC') }
+  default_scope -> { order('bets.created_at DESC') }
 
-  scope :visible, lambda { where('bets.published_at IS NOT NULL and bets.banned = ?', false) }
-  scope :open, lambda { visible.where('bets.closed_at IS NULL') }
-  scope :active, lambda { open.where('bets.deadline > ? and bets.closed_at IS NULL', Time.now.strftime("%Y-%m-%d")) }
-  scope :waiting, lambda { open.where('bets.deadline <= ? and bets.closed_at IS NULL', Time.now.strftime("%Y-%m-%d")) }
-  scope :closed, lambda { visible.where('bets.closed_at IS NOT NULL') }
-  scope :created, lambda { where('bets.published_at IS NULL and bets.closed_at IS NULL') }
-  scope :rejected, lambda { where('bets.published_at IS NULL and bets.closed_at IS NOT NULL') }
-  scope :banned, lambda { where('bets.banned = ?', 1) }
+  scope :visible, -> { where('bets.published_at IS NOT NULL and bets.banned = ?', false) }
+  scope :open, -> { visible.where('bets.closed_at IS NULL') }
+  scope :active, -> { open.where('bets.deadline > ? and bets.closed_at IS NULL', Time.now.strftime("%Y-%m-%d")) }
+  scope :waiting, -> { open.where('bets.deadline <= ? and bets.closed_at IS NULL', Time.now.strftime("%Y-%m-%d")) }
+  scope :closed, -> { visible.where('bets.closed_at IS NOT NULL') }
+  scope :created, -> { where('bets.published_at IS NULL and bets.closed_at IS NULL') }
+  scope :rejected, -> { where('bets.published_at IS NULL and bets.closed_at IS NOT NULL') }
+  scope :banned, -> { where('bets.banned = ?', 1) }
 
-  scope :oldest, lambda { order('created_at ASC') }
-  scope :newest, lambda { order('created_at DESC') }
+  scope :oldest, -> { order('created_at ASC') }
+  scope :newest, -> { order('created_at DESC') }
 
   belongs_to :category
   belongs_to :user
@@ -30,31 +30,27 @@ class Bet < ActiveRecord::Base
   validates :event_at, presence: true
   validate :proper_event_date
 
-  def Bet.for_display(params)
+  def self.for_display(params)
     scope1 = status_names(params[:user]).keys.include?(params[:status]) ? Bet.send(params[:status]) : Bet.visible
-    if scope1 && !params[:order].nil?
-      scope2 = Bet.send(params[:order])
-    end
-    merged = scope1 ? scope1.merge(scope2) : nil
-    if merged && !params[:category].nil?
-      scope3 = Bet.where('category_id = ?', params[:category])
-    end
-    merged = merged ? merged.merge(scope3) : []
+    scope2 = Bet.send(params[:order]) if scope1 && !params[:order].nil?
+    merged = scope1&.merge(scope2)
+    scope3 = Bet.where('category_id = ?', params[:category]) if merged && !params[:category].nil?
+    merged ? merged.merge(scope3) : []
   end
 
   def publish!
     self.published_at = Time.now
-    self.save
+    save
   end
 
   def ban!
     self.banned = true
-    self.save
+    save
   end
 
   def reject!
     self.closed_at = Time.now
-    self.save
+    save
   end
 
   def sum_positive
@@ -74,19 +70,19 @@ class Bet < ActiveRecord::Base
   end
 
   def active?
-    visible? && !closed? && self.deadline >= Time.now
+    visible? && !closed? && deadline >= Time.now
   end
 
   def waiting?
-    visible? && !closed? && self.deadline < Time.now
+    visible? && !closed? && deadline < Time.now
   end
 
   def banned?
-    self.banned
+    banned
   end
 
   def closed?
-    !self.closed_at.nil?
+    !closed_at.nil?
   end
 
   def settled?
@@ -98,7 +94,7 @@ class Bet < ActiveRecord::Base
   end
 
   def published?
-    !self.published_at.nil?
+    !published_at.nil?
   end
 
   def status
@@ -123,39 +119,37 @@ class Bet < ActiveRecord::Base
     bet_dispatcher.run
   end
 
-private
-
-  def Bet.status_names(user)
+  def self.status_names(user)
     statuses = {
       'active' => 'aktywne',
-      'waiting'  => 'oczekujące',
+      'waiting' => 'oczekujące',
       'visible' => 'widoczne',
-      'closed' => 'zakończone',
+      'closed' => 'zakończone'
     }
     if !user.nil? && user.admin?
       return statuses.merge({
-        'created' => 'nowe',
-        'rejected' => 'odrzucone',
-        'banned' => 'usunięte'
-      })
+                              'created' => 'nowe',
+                              'rejected' => 'odrzucone',
+                              'banned' => 'usunięte'
+                            })
     end
     statuses
   end
 
-  def Bet.order_names
+  def self.order_names
     { 'oldest' => 'najstarsze', 'newest' => 'najnowsze' }
   end
 
+  private
+
   def proper_deadline_date
-    if deadline.present? && deadline <= Date.today
-      errors.add(:deadline, :past)
-    end
-    if deadline.present? && event_at.present?
-      if deadline > event_at
-        errors.add(:deadline, :too_late)
-      elsif deadline == event_at
-        errors.add(:deadline, :the_same)
-      end
+    errors.add(:deadline, :past) if deadline.present? && deadline <= Date.today
+    return unless deadline.present? && event_at.present?
+
+    if deadline > event_at
+      errors.add(:deadline, :too_late)
+    elsif deadline == event_at
+      errors.add(:deadline, :the_same)
     end
   end
 
@@ -163,14 +157,14 @@ private
     if event_at.present? && event_at <= 3.days.ago.to_date
       errors.add(:event_at, "can't be in the past or less than 3 days from now")
     end
-    if event_at.present? && event_at > 1.years.from_now.to_date
-      errors.add(:event_at, "can't be more than a year from today")
-    end
+    return unless event_at.present? && event_at > 1.years.from_now.to_date
+
+    errors.add(:event_at, "can't be more than a year from today")
   end
 
   def close_and_save_with(positive)
     self.closed_at = DateTime.now
     self.positive = positive
-    return self.save(validate: false)
+    save(validate: false)
   end
 end

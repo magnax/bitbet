@@ -7,12 +7,11 @@ describe "Managing sessions" do
   describe "fails to login with invalid credentials" do
     before do
       fill_in "Username", with: ""
-      fill_in "Password", with: "" 
+      fill_in "Password", with: ""
       click_button "Login"
     end
 
     it { should have_content 'Invalid username or password' }
-  
   end
 
   describe "Log out" do
@@ -24,6 +23,6 @@ describe "Managing sessions" do
     it "should log out properly" do
       click_link "Logout"
       expect(page).to have_content "You are logged out"
-    end 
+    end
   end
 end

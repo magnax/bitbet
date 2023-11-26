@@ -18,9 +18,9 @@ class AccountsController < ApplicationController
   def create_deposit_address
     begin
       account = current_user.build_account({
-        :account_type => "deposit",
-        :nr => bitcoin_client.getnewaddress
-      })
+                                             :account_type => "deposit",
+                                             :nr => bitcoin_client.getnewaddress
+                                           })
       if account.save
         bitcoin_client.setaccount(account.nr, "user_#{current_user.id}")
         flash[:success] = I18n.t 'flash.success.deposit_address'
@@ -33,7 +33,7 @@ class AccountsController < ApplicationController
     redirect_to user_path(current_user)
   end
 
-private
+  private
 
   def account_params
     params.require(:account).permit(:user_id, :nr)

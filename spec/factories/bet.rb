@@ -1,9 +1,7 @@
 FactoryGirl.define do
-
   factory :bet do
-    
     sequence(:name)  { |n| "Some bet name #{n}" }
-    sequence(:text) { |n| "This is the description of bet number #{n}"}
+    sequence(:text) { |n| "This is the description of bet number #{n}" }
     user
     category
     event_at Date.today + 20
@@ -17,6 +15,5 @@ FactoryGirl.define do
     factory :published_bet do
       published_at DateTime.now
     end
-    
   end
 end

@@ -1,12 +1,14 @@
 require 'spec_helper'
 
 describe Bid do
-  	
-  before { @bid = Bid.new(
-    user_id: 1,
-    bet_id: 1,
-    amount_in_stc: 1,
-    positive: true) }
+  before do
+    @bid = Bid.new(
+      user_id: 1,
+      bet_id: 1,
+      amount_in_stc: 1,
+      positive: true
+    )
+  end
 
   subject { @bid }
 
@@ -32,7 +34,7 @@ describe Bid do
     before { @bid.positive = 0 }
     it { should be_valid }
   end
-    
+
   describe "should be invalid without amount" do
     before { @bid.amount_in_stc = " " }
     it { should_not be_valid }
@@ -51,7 +53,7 @@ describe Bid do
       inputs.each do |valid_input|
         @bid.amount_in_stc = valid_input
         expect(@bid).to be_valid
-    	end
+      end
     end
   end
 

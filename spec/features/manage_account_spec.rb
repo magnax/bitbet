@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe "Managing account" do
-
   let(:user) { FactoryGirl.create(:user) }
   let(:bitcoin_client) { Bitcoin::FakeClient.new }
 
@@ -28,14 +27,13 @@ describe "Managing account" do
     end
 
     describe "withdrawal address page" do
-
       it { should have_content "Current withdrawal address: none" }
 
       describe "when account numer is valid" do
         before { fill_in "BTC account number", with: "aaabbbcccddd" }
 
         it "creates new address" do
-          expect{ click_button "Save" }.to change(Account, :count).by(1)
+          expect { click_button "Save" }.to change(Account, :count).by(1)
         end
       end
     end
@@ -43,16 +41,16 @@ describe "Managing account" do
     describe "when account number is invalid" do
       before do
         bitcoin_client.set_response_for('validateaddress',
-          { "isvalid" => false })
+                                        { "isvalid" => false })
         fill_in "BTC account number", with: "aaabbbcccddd"
       end
 
       it "don't create new address" do
-        expect{
+        expect  do
           click_button "Save"
           expect(page).to have_content "Current withdrawal address:"
           expect(page).to have_content "BTC account number is invalid"
-        }.to_not change(Account, :count)
+        end.to_not change(Account, :count)
       end
     end
 
@@ -63,10 +61,10 @@ describe "Managing account" do
       end
 
       it "don't create new address" do
-        expect{
+        expect  do
           click_button "Save"
           expect(page).to have_content "BTC account number cannot be set when bitcoin client isn't working"
-        }.to_not change(Account, :count)
+        end.to_not change(Account, :count)
       end
     end
 

@@ -5,26 +5,26 @@ class User < ActiveRecord::Base
   before_create :create_remember_token
 
   validates :name, presence: true, length: { maximum: 50 }
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },
-    uniqueness: { case_sensitive: false }
+                    uniqueness: { case_sensitive: false }
 
   has_secure_password
   validates :password, length: { minimum: 6 }
 
-  #bets created by user
+  # bets created by user
   has_many :bets
   has_many :bids
-  #bets in which user participating
+  # bets in which user participating
   has_many :bidded_bets, through: :bids, source: :bet
   has_many :accounts
   has_many :operations
 
-  def User.new_remember_token
+  def self.new_remember_token
     SecureRandom.urlsafe_base64
   end
 
-  def User.encrypt(token)
+  def self.encrypt(token)
     Digest::SHA1.hexdigest(token.to_s)
   end
 
@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
 
   def create_new_deposit(transaction)
     operations.build(
-      :amount => (BigDecimal(transaction['amount'].to_s) * 100000000.0).to_i,
+      :amount => (BigDecimal(transaction['amount'].to_s) * 100_000_000.0).to_i,
       :account_id => nil,
       :bet_id => nil,
       :operation_type => 'receive',

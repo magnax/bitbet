@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ApplicationHelper do
   describe "#query_string" do
-    let(:params) { {:status  => 'active', :order => 'desc', :category => 'Polityka' } }
+    let(:params) { { :status => 'active', :order => 'desc', :category => 'Polityka' } }
 
     it "returns proper string for default params" do
       key = nil

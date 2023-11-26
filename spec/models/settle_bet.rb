@@ -1,26 +1,26 @@
 require 'spec_helper'
 
 describe Bet do
-  before do 
+  before do
     @bet = FactoryGirl.create(:published_bet)
     @maniek = FactoryGirl.create(:user)
-    operation = FactoryGirl.create(:operation, { 
-      user_id: @maniek.id, 
-      amount: 200000000, 
-      operation_type: "receive" 
-    })
+    FactoryGirl.create(:operation, {
+                         user_id: @maniek.id,
+                         amount: 200_000_000,
+                         operation_type: "receive"
+                       })
     @sid = FactoryGirl.create(:user)
-    operation = FactoryGirl.create(:operation, { 
-      user_id: @sid.id, 
-      amount: 100000000, 
-      operation_type: "receive" 
-    })
+    FactoryGirl.create(:operation, {
+                         user_id: @sid.id,
+                         amount: 100_000_000,
+                         operation_type: "receive"
+                       })
     @ella = FactoryGirl.create(:user)
-    operation = FactoryGirl.create(:operation, { 
-      user_id: @ella.id, 
-      amount: 120000000, 
-      operation_type: "receive" 
-    })
+    FactoryGirl.create(:operation, {
+                         user_id: @ella.id,
+                         amount: 120_000_000,
+                         operation_type: "receive"
+                       })
     Bid.create({ bet_id: @bet.id, user_id: @maniek.id, amount_in_stc: 1.0, positive: true })
     Bid.create({ bet_id: @bet.id, user_id: @sid.id, amount_in_stc: 0.5, positive: true })
     Bid.create({ bet_id: @bet.id, user_id: @ella.id, amount_in_stc: 1.0, positive: false })
@@ -30,7 +30,7 @@ describe Bet do
 
   describe "maniek should have some amount" do
     it "" do
-      expect(@maniek.available_funds).to eq 100000000
+      expect(@maniek.available_funds).to eq 100_000_000
     end
   end
 
@@ -41,11 +41,11 @@ describe Bet do
   end
 
   it "should have correct sum of positive bids" do
-    expect(@bet.sum_positive).to eq 150000000
+    expect(@bet.sum_positive).to eq 150_000_000
   end
 
   it "should have correct sum of negative bids" do
-    expect(@bet.sum_negative).to eq 100000000
+    expect(@bet.sum_negative).to eq 100_000_000
   end
 
   it "should have participants" do
@@ -62,7 +62,7 @@ describe Bet do
 
     it "should create operation for creator commision" do
       o = Operation.commissions.first
-      expect(o.amount).to eq 5000000 
+      expect(o.amount).to eq 5_000_000
     end
 
     it "should have total of 7 operations" do
@@ -80,7 +80,7 @@ describe Bet do
     it "should have fee" do
       expect(Fee.all.count).to eq 1
       f = Fee.first
-      expect(f.amount).to eq 5000000
+      expect(f.amount).to eq 5_000_000
     end
   end
 
@@ -93,7 +93,7 @@ describe Bet do
 
     it "should create operation for creator commision" do
       o = Operation.commissions.first
-      expect(o.amount).to eq 7500000
+      expect(o.amount).to eq 7_500_000
     end
 
     it "should have total of 7 operations" do

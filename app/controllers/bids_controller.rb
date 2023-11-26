@@ -1,8 +1,6 @@
-#encoding = utf-8
+# encoding = utf-8
 class BidsController < ApplicationController
-
-  def new
-  end
+  def new; end
 
   def create
     @bet = Bet.find(params[:bet_id])
@@ -22,5 +20,4 @@ class BidsController < ApplicationController
   def bid_params
     params.require(:bid).permit(:user_id, :bet_id, :amount_in_stc, :positive)
   end
-
 end

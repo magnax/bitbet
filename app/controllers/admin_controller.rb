@@ -2,15 +2,12 @@ class AdminController < ApplicationController
   before_action :signed_in_user
   before_action :admin_user
 
-  def menu
-  end
+  def menu; end
 
   def info
-    begin
-      @address = bitcoin_client.getinfo
-    rescue BitcoinClient::ConnectionError
-      redirect_with_error I18n.t 'flash.error.client_error'
-    end
+    @address = bitcoin_client.getinfo
+  rescue BitcoinClient::ConnectionError
+    redirect_with_error I18n.t 'flash.error.client_error'
   end
 
   def transactions
@@ -19,7 +16,7 @@ class AdminController < ApplicationController
       @output = deposit_check.check
     rescue Bitcoin::ConnectionError
       redirect_with_error I18n.t 'flash.error.client_error' and return
-    end  
+    end
   end
 
   def account_fix

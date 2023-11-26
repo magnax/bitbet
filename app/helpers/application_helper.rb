@@ -16,8 +16,8 @@ module ApplicationHelper
     qs = []
     %w[status order category].each do |k|
       if !params[k.to_sym].nil? || key == k
-        status = (key == k) ? value : params[k.to_sym]
-        qs.append("#{k}=#{status}") if !status.nil?
+        status = key == k ? value : params[k.to_sym]
+        qs.append("#{k}=#{status}") unless status.nil?
       end
     end
     qs.join('&')

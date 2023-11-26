@@ -1,48 +1,49 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.8'
-gem 'jquery-rails'
-gem 'bootstrap-sass'
-gem 'haml-rails'
-gem 'bootstrap-datepicker-rails'
 gem 'bcrypt'
-gem 'faker'
-gem 'will_paginate'
+gem 'bootstrap-datepicker-rails'
+gem 'bootstrap-sass'
 gem 'bootstrap-will_paginate'
+gem 'dotenv-rails'
+gem 'faker'
+gem 'haml-rails'
+gem 'jbuilder'
+gem 'jquery-rails'
 gem 'pg', '0.20'
-# Bitcoin Client 
+gem 'puma'
+gem 'rails', '4.2.8'
+gem 'will_paginate'
+# Bitcoin Client
 gem 'rpcjson', git: 'git@github.com:marko8904/rpcjson.git'
-gem 'whenever', :require => false
+gem 'rubocop'
 gem 'sass-rails'
-gem 'uglifier'
 gem 'therubyracer', platforms: :ruby
 gem 'turbolinks'
-gem 'jbuilder'
-gem 'dotenv-rails'
-gem 'puma'
+gem 'uglifier'
+gem 'whenever', :require => false
 
 group :development do
-  gem 'web-console'
   gem 'better_errors', '2.1.1'
   gem "binding_of_caller"
+  gem 'web-console'
 end
 
 group :development, :test do
+  gem 'cucumber-rails', :require => false
+  gem 'database_cleaner'
+  gem 'pry-byebug'
   gem 'pry-rails'
   gem 'pry-rescue'
-  gem 'pry-byebug'
-  gem 'test-unit'
-  gem 'rspec-rails'
   gem 'rspec-its'
-  gem 'cucumber-rails', :require => false
+  gem 'rspec-rails'
   gem 'simplecov', :require => false
-  gem 'database_cleaner'
+  gem 'test-unit'
 end
 
 group :test do
-  gem 'selenium-webdriver'
   gem 'capybara'
   gem 'factory_girl_rails', '4.2.1'
-  gem 'timecop'
   gem 'rspec-mocks'
+  gem 'selenium-webdriver'
+  gem 'timecop'
 end

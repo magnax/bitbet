@@ -12,25 +12,25 @@ describe "User account tests" do
   end
 
   it "creates new user" do
-    expect {
+    expect do
       click_button "Register"
       expect(page).to have_content "Your account was created"
-    }.to change(User, :count).by 1
+    end.to change(User, :count).by 1
   end
 
   it "shows notice when bitcoin account can't be created" do
-    allow(@bitcoin_client).to receive(:create_user_account).with(anything()).and_return(false)
-    expect {
+    allow(@bitcoin_client).to receive(:create_user_account).with(anything).and_return(false)
+    expect do
       click_button "Register"
       expect(page).to have_content "Failed to create bitcoin account"
-    }.to change(User, :count).by 1
+    end.to change(User, :count).by 1
   end
 
   it "redirects to home when rpc client isn't working" do
     @bitcoin_client.disable
-    expect {
+    expect do
       click_button "Register"
       expect(page).to have_content "Bitcoin client not working"
-    }.to change(User, :count).by 1
+    end.to change(User, :count).by 1
   end
 end

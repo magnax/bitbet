@@ -8,16 +8,16 @@ describe "User pages" do
     end
 
     describe "Fail to create new user" do
-      before do  
+      before do
         visit new_user_path
       end
 
       it "renders form and error message" do
-        expect{
+        expect do
           click_button "Register"
           expect(page).to have_content "New user registration"
           expect(page).to have_content "User name cannot be blank"
-        }.to_not change(User, :count)
+        end.to_not change(User, :count)
       end
     end
   end

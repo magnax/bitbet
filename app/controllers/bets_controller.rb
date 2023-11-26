@@ -1,9 +1,10 @@
-#encoding = utf-8
+# encoding = utf-8
 class BetsController < ApplicationController
-  before_action :signed_in_user, only: [:create, :new]
-  before_action :admin_user, only: [
-    :publish, :ban, :reject, :destroy, :end_bet, :settle]
-  before_action :find_bet_by_id, except: [ :index, :new, :create, :bet404 ]
+  before_action :signed_in_user, only: %i[create new]
+  before_action :admin_user, only: %i[
+    publish ban reject destroy end_bet settle
+  ]
+  before_action :find_bet_by_id, except: %i[index new create bet404]
 
   def index
     @bets = Bet.for_display(params.merge({ :user => current_user }))
@@ -49,8 +50,7 @@ class BetsController < ApplicationController
     redirect_to @bet
   end
 
-  def bet404
-  end
+  def bet404; end
 
   def destroy
     flash[:success] = "Usunięto zdarzenie! (ale tak naprawdę to jeszcze nie ma usuwania ;))"
@@ -58,21 +58,25 @@ class BetsController < ApplicationController
   end
 
   def end_bet
+    return unless @bet.closed?
+
     redirect_to @bet, :flash => {
-      :error => I18n.t('flash.error.cannot_settle') } if @bet.closed?
+      :error => I18n.t('flash.error.cannot_settle')
+    }
   end
 
   def settle
     @bet.settle(params[:positive] ? true : false)
     redirect_to @bet, :flash => {
-      :success => I18n.t('flash.success.bet_settled') }
+      :success => I18n.t('flash.success.bet_settled')
+    }
   end
 
   private
 
   def bet_params
     params.require(:bet).permit(:name, :text, :category_id,
-      :deadline, :event_at)
+                                :deadline, :event_at)
   end
 
   def find_bet_by_id

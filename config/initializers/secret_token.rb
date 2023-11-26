@@ -1,5 +1,5 @@
-BitbetTk::Application.config.secret_key_base = if Rails.env.development? or Rails.env.test?
-  ('666' * 10)
-else
-  ENV['SECRET_TOKEN']
-end
+BitbetTk::Application.config.secret_key_base = if Rails.env.development? || Rails.env.test?
+                                                 ('666' * 10)
+                                               else
+                                                 ENV.fetch('SECRET_TOKEN', nil)
+                                               end

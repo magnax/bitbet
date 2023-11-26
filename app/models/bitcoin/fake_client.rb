@@ -2,7 +2,6 @@ module Bitcoin
   class ConnectionError < StandardError; end
 
   class FakeClient
-    
     def initialize
       @working = true
     end
@@ -15,7 +14,7 @@ module Bitcoin
       instance_variable_set("@#{method_name}_response", response)
     end
 
-    def create_user_account(user)
+    def create_user_account(_user)
       raise_error
       @create_user_account_response || true
     end
@@ -34,17 +33,17 @@ module Bitcoin
       @listaccounts_response || []
     end
 
-    def listtransactions(user_id, count, from)
+    def listtransactions(_user_id, _count, from)
       raise_error
       @listtransactions_response[from] || []
     end
 
-    def setaccount(*args)
+    def setaccount(*_args)
       raise_error
       @setaccount_response || true
     end
 
-    def validateaddress(nr)
+    def validateaddress(_nr)
       raise_error
       @validateaddress_response || { 'isvalid' => true }
     end

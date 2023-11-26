@@ -25,7 +25,7 @@ describe AdminController do
       it "renders error on bitcoin client not working" do
         get :transactions
         expect(response).to redirect_to("/")
-        expect(flash[:error]).to match /Bitcoin client not working/i
+        expect(flash[:error]).to match(/Bitcoin client not working/i)
       end
     end
   end

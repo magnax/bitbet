@@ -24,16 +24,14 @@ class UsersController < ApplicationController
 
   def name_availability
     render json: {
-      text: ((User.find_by_name(params[:name])) ? "this name is not available" : "OK!")
+      text: (User.find_by_name(params[:name]) ? "this name is not available" : "OK!")
     }
   end
 
   private
-  
+
   def try_create_bitcoin_account(user)
-    unless bitcoin_client.create_user_account(user)
-      flash[:notice] = I18n.t 'flash.notice.user_account_failed'
-    end
+    flash[:notice] = I18n.t 'flash.notice.user_account_failed' unless bitcoin_client.create_user_account(user)
   rescue Bitcoin::ConnectionError
     flash[:error] = I18n.t 'flash.error.client_error'
   end

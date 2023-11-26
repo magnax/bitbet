@@ -1,4 +1,4 @@
-#encoding = utf-8
+# encoding = utf-8
 class Operation < ActiveRecord::Base
   include BitcoinHelper
   include CheckUser
@@ -10,23 +10,23 @@ class Operation < ActiveRecord::Base
   belongs_to :bet
   belongs_to :account
 
-  default_scope  lambda { order('operations.created_at DESC') }
-  scope :deposits, lambda { where('operations.operation_type = ?', 'receive') }
-  scope :winnings, lambda { where('operations.operation_type = ?', 'prize') }
-  scope :incomings, lambda { where('operations.operation_type in (?)', ['receive', 'prize']) }
-  scope :withdraws, lambda { where('operations.operation_type = ?', 'send') }
-  scope :losings, lambda { where('operations.operation_type = ?', 'loss') }
-  scope :outgoings, lambda { where('operations.operation_type in (?)', ['send', 'loss']) }
-  scope :commissions, lambda { where('operations.operation_type = ?', 'commission') }
+  default_scope -> { order('operations.created_at DESC') }
+  scope :deposits, -> { where('operations.operation_type = ?', 'receive') }
+  scope :winnings, -> { where('operations.operation_type = ?', 'prize') }
+  scope :incomings, -> { where('operations.operation_type in (?)', %w[receive prize]) }
+  scope :withdraws, -> { where('operations.operation_type = ?', 'send') }
+  scope :losings, -> { where('operations.operation_type = ?', 'loss') }
+  scope :outgoings, -> { where('operations.operation_type in (?)', %w[send loss]) }
+  scope :commissions, -> { where('operations.operation_type = ?', 'commission') }
 
-  def Operation.check_deposits
+  def self.check_deposits
     puts "666 new deposits"
   end
 
-  def Operation.types
+  def self.types
     {
       'receive' => 'Wpłata',
-      'send'  => 'Wypłata z konta',
+      'send' => 'Wypłata z konta',
       'prize' => 'Wygrana',
       'loss' => 'Przegrana',
       'commission' => 'Prowizja'

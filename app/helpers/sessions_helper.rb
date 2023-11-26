@@ -1,6 +1,5 @@
-#encoding = utf-8
+# encoding = utf-8
 module SessionsHelper
-
   def sign_in(user)
     remember_token = User.new_remember_token
     cookies.permanent[:remember_token] = remember_token
@@ -22,10 +21,10 @@ module SessionsHelper
   end
 
   def signed_in_user
-    unless signed_in?
-      store_location
-      redirect_to login_url, notice: "Zaloguj się, aby przejść do żądanej strony"
-    end
+    return if signed_in?
+
+    store_location
+    redirect_to login_url, notice: "Zaloguj się, aby przejść do żądanej strony"
   end
 
   def store_location

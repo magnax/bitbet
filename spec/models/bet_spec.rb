@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Bet do
-
   before do
     Timecop.freeze(Date.parse("2013-11-15"))
     @bet = Bet.new(name: "Example bet", category_id: 4, text: "Description of example bet",
@@ -35,9 +34,7 @@ describe Bet do
   end
 
   context "bet dates" do
-
     describe "deadline" do
-
       describe "should not be valid when empty" do
         before { @bet.deadline = "" }
         it { should_not be_valid }
@@ -69,7 +66,6 @@ describe Bet do
     end
 
     context "event_at" do
-
       describe "should not be valid when empty" do
         before { @bet.event_at = "" }
         it { should_not be_valid }

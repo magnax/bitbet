@@ -5,7 +5,7 @@ module Deposit
     end
 
     def get_last_deposit_id
-      @user.get_last_deposit_id 
+      @user.get_last_deposit_id
     end
 
     def create_new_deposit(transaction)

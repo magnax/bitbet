@@ -1,6 +1,5 @@
 module Deposit
   class Check
-
     MIN_CONFIRMATIONS_REQUIRED = 3
 
     def initialize(service)
@@ -10,7 +9,7 @@ module Deposit
 
     def check
       @output = ['start']
-      @service.listaccounts.each do |account, balance|
+      @service.listaccounts.each do |account, _balance|
         process_account(account)
       end
       @output << "end"
@@ -19,14 +18,14 @@ module Deposit
     def process_account(account)
       if account.include?('user_')
         @output << "account: '#{account}'"
-        return process_transactions(account)
+        process_transactions(account)
       else
         @output << "skip: '#{account}'"
       end
     end
 
     def process_transactions(account)
-      process_next_transaction(account, 0, get_last_transaction_txid(account))    
+      process_next_transaction(account, 0, get_last_transaction_txid(account))
       @output << "-- end '#{account}'"
     end
 
@@ -39,15 +38,15 @@ module Deposit
       transaction = @service.listtransactions(account, 1, iteration)[0]
       if transaction.nil?
         @output << end_or_no_transactions(iteration, account)
-        return
+        nil
       else
         last_or_deposit(transaction, last_txid)
         process_next_transaction(account, iteration + 1, last_txid)
       end
     end
 
-    def end_or_no_transactions(i, account)
-      (i == 0) ? "-- no transactions for '#{account}' --" : "-- end of transactions for '#{account}' --"
+    def end_or_no_transactions(t_count, account)
+      t_count.zero? ? "-- no transactions for '#{account}' --" : "-- end of transactions for '#{account}' --"
     end
 
     def last_or_deposit(transaction, last_txid)
@@ -60,7 +59,8 @@ module Deposit
 
     def deposit_or_no_confirmations(transaction)
       if transaction['confirmations'] < MIN_CONFIRMATIONS_REQUIRED
-        @output << "-- not enough confirmations (#{transaction['confirmations']}/#{MIN_CONFIRMATIONS_REQUIRED}) for #{transaction['amount']} BTC --"
+        @output << "-- not enough confirmations (#{transaction['confirmations']}/" \
+                   "#{MIN_CONFIRMATIONS_REQUIRED}) for #{transaction['amount']} BTC --"
       else
         make_deposit(transaction)
       end

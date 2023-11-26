@@ -15,7 +15,8 @@ class OperationsController < ApplicationController
         @operation.time = @operation.timereceived = DateTime.now
         if @operation.save
           redirect_to user_path(current_user), flash: {
-            success: I18n.t('flash.success.withdrawal_amount', amount: @operation.amount_in_stc.to_s.gsub('.', ',')) } and return
+            success: I18n.t('flash.success.withdrawal_amount', amount: @operation.amount_in_stc.to_s.gsub('.', ','))
+          } and return
         end
       end
     rescue BitcoinClient::ConnectionError
@@ -28,7 +29,7 @@ class OperationsController < ApplicationController
     @operation = current_user.operations.withdraws.new
   end
 
-private
+  private
 
   def operations_params
     params.require(:operation).permit(:user_id, :amount_in_stc)

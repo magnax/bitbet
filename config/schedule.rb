@@ -8,7 +8,7 @@
 set :output, "/var/www/bitbet.tk/log/cron_log.log"
 
 every 2.minutes do
-	runner "Operation.check_deposits"
+  runner "Operation.check_deposits"
 end
 #
 # every 2.hours do

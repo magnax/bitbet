@@ -1,14 +1,13 @@
 BitbetTk::Application.routes.draw do
-
   get "operations/withdraw"
   get "accounts/create"
-  
-  #root path
+
+  # root path
   root to: "static_pages#index"
 
-  #admin routes
+  # admin routes
   get "admin/menu", via: 'get', as: 'admin'
-  match "/admin/:action", to: "admin##{:action}", via: 'get'
+  match "/admin/:action", to: "admin#action", via: 'get'
   match "/admin/account_fix/:id", to: "admin#account_fix", via: 'get', as: 'admin_account_fix'
 
   get "bids/new"
@@ -16,7 +15,7 @@ BitbetTk::Application.routes.draw do
   get "bids_controller/new"
   get "bids_controller/create"
 
-  #static pages paths
+  # static pages paths
   match '/login',  to: 'sessions#new',         via: 'get'
   match '/logout', to: 'sessions#destroy',     via: 'delete'
   match '/password_reset', to: 'users#password_reset',     via: 'get'
@@ -36,11 +35,10 @@ BitbetTk::Application.routes.draw do
   resources :bets do
     resources :bids
   end
-  resources :users, only: [:create, :new, :show] do
+  resources :users, only: %i[create new show] do
     get :name_availability, on: :collection
   end
-  resources :sessions, only: [:new, :create, :destroy]
-  resources :accounts, only: [:new, :create]
+  resources :sessions, only: %i[new create destroy]
+  resources :accounts, only: %i[new create]
   resources :operations, only: [:create]
-
 end

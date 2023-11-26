@@ -4,7 +4,7 @@ describe UsersController do
   describe 'renders error page when no bitcoin client' do
     render_views
     subject { get :new }
-    
+
     before do
       fake_client = Bitcoin::FakeClient.new
       fake_client.disable

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe "Bets listing" do
-
   it "shows list of bets" do
     visit bets_path
     expect(page).to have_content "Events"
@@ -38,16 +37,16 @@ describe "Bets listing" do
       select "Science", from: "Category"
       fill_in "Event date", with: Date.today + 10.days
       fill_in "Deadline", with: Date.today + 7.days
-      expect{ 
+      expect do
         click_button "Save bet"
         expect(page).to have_content "Successfully added new bet event"
-      }.to change(Bet, :count).by 1
+      end.to change(Bet, :count).by 1
     end
 
     it "renders 'new' view with invalid inputs" do
       visit new_bet_path
       fill_in "Bet name", with: "My new bet"
-      expect{ click_button "Save bet" }.to_not change(Bet, :count)
+      expect { click_button "Save bet" }.to_not change(Bet, :count)
     end
 
     it "when bets is not visible" do
@@ -86,19 +85,19 @@ describe "Bets listing" do
       it "ban" do
         expect(page).to have_link "Ban (delete)"
 
-        expect { 
+        expect do
           click_link "Ban (delete)"
           expect(page).to have_content "Event was banned"
-        }.to change(Bet.visible, :count).by -1
+        end.to change(Bet.visible, :count).by(-1)
       end
     end
 
     it "can reject event" do
-      expect { 
+      expect do
         click_link "Reject"
         expect(page).to have_content "Event rejected"
         expect(page).to_not have_link "Reject"
-      }.to_not change(Bet.visible, :count)
+      end.to_not change(Bet.visible, :count)
     end
   end
 end
