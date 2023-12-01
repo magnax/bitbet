@@ -10,7 +10,7 @@ class OperationsController < ApplicationController
           current_user.withdrawal_address,
           @operation.amount_in_stc
         )
-        @operation.operation_type = "send"
+        @operation.operation_type = 'send'
         @operation.txid = txid
         @operation.time = @operation.timereceived = DateTime.now
         if @operation.save

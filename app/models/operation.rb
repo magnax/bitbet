@@ -20,7 +20,7 @@ class Operation < ActiveRecord::Base
   scope :commissions, -> { where('operations.operation_type = ?', 'commission') }
 
   def self.check_deposits
-    puts "666 new deposits"
+    puts '666 new deposits'
   end
 
   def self.types

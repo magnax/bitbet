@@ -5,8 +5,8 @@ FactoryBot.define do
   factory :user do
     name
     email
-    password { "111111" }
-    password_confirmation { "111111" }
+    password { '111111' }
+    password_confirmation { '111111' }
 
     trait :admin do
       admin { true }

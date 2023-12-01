@@ -7,8 +7,8 @@ class Bet < ActiveRecord::Base
 
   scope :visible, -> { where('bets.published_at IS NOT NULL and bets.banned = ?', false) }
   scope :open, -> { visible.where('bets.closed_at IS NULL') }
-  scope :active, -> { open.where('bets.deadline > ? and bets.closed_at IS NULL', Time.now.strftime("%Y-%m-%d")) }
-  scope :waiting, -> { open.where('bets.deadline <= ? and bets.closed_at IS NULL', Time.now.strftime("%Y-%m-%d")) }
+  scope :active, -> { open.where('bets.deadline > ? and bets.closed_at IS NULL', Time.now.strftime('%Y-%m-%d')) }
+  scope :waiting, -> { open.where('bets.deadline <= ? and bets.closed_at IS NULL', Time.now.strftime('%Y-%m-%d')) }
   scope :closed, -> { visible.where('bets.closed_at IS NOT NULL') }
   scope :created, -> { where('bets.published_at IS NULL and bets.closed_at IS NULL') }
   scope :rejected, -> { where('bets.published_at IS NULL and bets.closed_at IS NOT NULL') }
@@ -99,17 +99,17 @@ class Bet < ActiveRecord::Base
 
   def status
     if created?
-      "new"
+      'new'
     elsif active?
-      "active"
+      'active'
     elsif waiting?
-      "waiting"
+      'waiting'
     elsif banned?
-      "banned"
+      'banned'
     elsif settled?
-      "settled"
+      'settled'
     else
-      "rejected"
+      'rejected'
     end
   end
 

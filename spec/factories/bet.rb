@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :bet do
-    sequence(:name)  { |n| "Some bet name #{n}" }
+    sequence(:name) { |n| "Some bet name #{n}" }
     sequence(:text) { |n| "This is the description of bet number #{n}" }
     user
     category

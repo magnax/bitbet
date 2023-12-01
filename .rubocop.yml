@@ -19,19 +19,19 @@ Style/ClassAndModuleChildren:
   Enabled: false
 
 Style/ExpandPathArguments:
-  Enabled: false
+  Enabled: true
 
 Style/StringLiterals:
-  Enabled: false
+  Enabled: true
 
 Style/FrozenStringLiteralComment:
   Enabled: false
 
 Layout/TrailingEmptyLines:
-  Enabled: false
+  Enabled: true
 
 Layout/ExtraSpacing:
-  Enabled: false
+  Enabled: true
 
 Style/RedundantConstantBase:
   Enabled: false
@@ -63,4 +63,7 @@ Style/MissingRespondToMissing:
   Enabled: false
 
 Style/Documentation:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
   Enabled: false

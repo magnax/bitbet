@@ -15,40 +15,40 @@ describe Bid do
   it { should be_valid }
   it { should respond_to(:amount_in_stc) }
 
-  describe "should not be valid without user_id" do
+  describe 'should not be valid without user_id' do
     before { @bid.user_id = nil }
     it { should_not be_valid }
   end
 
-  describe "should not be valid without bet_id" do
+  describe 'should not be valid without bet_id' do
     before { @bid.bet_id = nil }
     it { should_not be_valid }
   end
 
-  describe "should not be valid without positive" do
+  describe 'should not be valid without positive' do
     before { @bid.positive = nil }
     it { should_not be_valid }
   end
 
-  describe "should be valid with positive set to 0" do
+  describe 'should be valid with positive set to 0' do
     before { @bid.positive = 0 }
     it { should be_valid }
   end
 
-  describe "should be invalid without amount" do
-    before { @bid.amount_in_stc = " " }
+  describe 'should be invalid without amount' do
+    before { @bid.amount_in_stc = ' ' }
     it { should_not be_valid }
   end
 
-  describe "should be invalid without amount" do
-    before { @bid.amount_in_stc = "0" }
+  describe 'should be invalid without amount' do
+    before { @bid.amount_in_stc = '0' }
     it { should_not be_valid }
   end
 
-  describe "valid cases" do
+  describe 'valid cases' do
     its(:amount) { should eq 100_000_000 }
 
-    it "should be valid" do
+    it 'should be valid' do
       inputs = %w[0,2 3.3 3 .2 ,34]
       inputs.each do |valid_input|
         @bid.amount_in_stc = valid_input
@@ -57,8 +57,8 @@ describe Bid do
     end
   end
 
-  describe "invalid cases" do
-    it "should be invalid" do
+  describe 'invalid cases' do
+    it 'should be invalid' do
       inputs = %w[0,,2 asdf 3a 3..3]
       inputs.each do |invalid_input|
         @bid.amount_in_stc = invalid_input

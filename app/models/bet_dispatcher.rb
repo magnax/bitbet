@@ -31,7 +31,7 @@ class BetDispatcher
       else
         # loosing bid
         @bidders[b.user_id] -= b.amount
-        bc.move "user_#{b.user_id}", "tmp_loss", stc_to_btc(b.amount)
+        bc.move "user_#{b.user_id}", 'tmp_loss', stc_to_btc(b.amount)
       end
     end
     sum_of_wins
@@ -42,25 +42,25 @@ class BetDispatcher
                        user_id: @bet.user_id,
                        amount: creator_commission.to_i,
                        bet_id: @bet.id,
-                       operation_type: "commission"
+                       operation_type: 'commission'
                      })
   end
 
   def set_fee(amount)
     Fee.create({ bet_id: @bet.id, amount: amount.to_i })
-    bc.move "tmp_loss", "fees", stc_to_btc(amount)
+    bc.move 'tmp_loss', 'fees', stc_to_btc(amount)
   end
 
   def dispatch_bidders
     # pętla do przelewów dla poszczególnych obstawiających
     @bidders.each do |user_id, amount|
-      bc.move "tmp_loss", "user_#{user_id}", stc_to_btc(amount) if amount.positive?
+      bc.move 'tmp_loss', "user_#{user_id}", stc_to_btc(amount) if amount.positive?
       # zarejestrować operację w systemie
       Operation.create({
                          user_id: user_id,
                          amount: amount.to_i.abs,
                          bet_id: @bet.id,
-                         operation_type: amount.positive? ? "prize" : "loss"
+                         operation_type: amount.positive? ? 'prize' : 'loss'
                        })
     end
   end

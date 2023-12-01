@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 
   def name_availability
     render json: {
-      text: (User.find_by_name(params[:name]) ? "this name is not available" : "OK!")
+      text: (User.find_by_name(params[:name]) ? 'this name is not available' : 'OK!')
     }
   end
 

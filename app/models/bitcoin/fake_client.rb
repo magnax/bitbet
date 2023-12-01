@@ -25,7 +25,7 @@ module Bitcoin
 
     def getnewaddress
       raise_error
-      @getnewaddress_response || "abcde"
+      @getnewaddress_response || 'abcde'
     end
 
     def listaccounts

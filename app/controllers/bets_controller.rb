@@ -53,7 +53,7 @@ class BetsController < ApplicationController
   def bet404; end
 
   def destroy
-    flash[:success] = "Usunięto zdarzenie! (ale tak naprawdę to jeszcze nie ma usuwania ;))"
+    flash[:success] = 'Usunięto zdarzenie! (ale tak naprawdę to jeszcze nie ma usuwania ;))'
     redirect_to root_path
   end
 

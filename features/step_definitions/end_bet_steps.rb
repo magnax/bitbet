@@ -1,20 +1,20 @@
 Given(/^I have a published bet$/) do
   @bet = create(:published_bet)
-  @bet.published_at.should == "2013-11-11 13:54:11"
+  @bet.published_at.should == '2013-11-11 13:54:11'
   # RPC::JSON::Client.should_receive(:move).and_return(true)
 end
 
 Given(/^I am logged as admin$/) do
   @user = create(:admin)
   visit login_path
-  fill_in "Użytkownik", with: @user.name
-  fill_in "Hasło", with: "111111"
-  click_button "Zaloguj się"
+  fill_in 'Użytkownik', with: @user.name
+  fill_in 'Hasło', with: '111111'
+  click_button 'Zaloguj się'
 end
 
 When(/^I choose to end bet as positive on settle page$/) do
   visit "/bets/#{@bet.id}/end"
-  click_button "Zakończ jako PRAWDA"
+  click_button 'Zakończ jako PRAWDA'
 end
 
 Then(/^I should have this bet closed$/) do
@@ -28,7 +28,7 @@ Given(/^I have a users with amounts:$/) do |table|
     create(:operation, {
              user_id: bid_user.id,
              amount: amount * 100_000_000,
-             operation_type: "receive"
+             operation_type: 'receive'
            })
   end
 end

@@ -1,6 +1,6 @@
 module ApplicationHelper
   def full_title(page_title)
-    base_title = "BitBet :: bet on bitcoin"
+    base_title = 'BitBet :: bet on bitcoin'
     if page_title.empty?
       base_title
     else

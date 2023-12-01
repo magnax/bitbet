@@ -24,7 +24,7 @@ module SessionsHelper
     return if signed_in?
 
     store_location
-    redirect_to login_url, notice: "Zaloguj się, aby przejść do żądanej strony"
+    redirect_to login_url, notice: 'Zaloguj się, aby przejść do żądanej strony'
   end
 
   def store_location

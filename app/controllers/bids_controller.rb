@@ -7,7 +7,7 @@ class BidsController < ApplicationController
     @bid = @bet.bids.build(bid_params)
     bid_amount_in_stc = bid_params[:amount_in_stc]
     if @bid.save
-      flash[:success] = "Pomyślnie obstawiłeś zdarzenie!"
+      flash[:success] = 'Pomyślnie obstawiłeś zdarzenie!'
       redirect_to bet_path(@bet)
     else
       @bid.amount_in_stc = bid_amount_in_stc

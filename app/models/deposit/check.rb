@@ -12,7 +12,7 @@ module Deposit
       @service.listaccounts.each do |account, _balance|
         process_account(account)
       end
-      @output << "end"
+      @output << 'end'
     end
 
     def process_account(account)
@@ -51,7 +51,7 @@ module Deposit
 
     def last_or_deposit(transaction, last_txid)
       if transaction['txid'] == last_txid
-        @output << "-- existing transaction met --"
+        @output << '-- existing transaction met --'
       elsif transaction['category'] == 'receive'
         @output << deposit_or_no_confirmations(transaction)
       end
