@@ -94,13 +94,13 @@ class User < ActiveRecord::Base
 
   def create_new_deposit(transaction)
     operations.build(
-      :amount => (BigDecimal(transaction['amount'].to_s) * 100_000_000.0).to_i,
-      :account_id => nil,
-      :bet_id => nil,
-      :operation_type => 'receive',
-      :txid => transaction['txid'],
-      :time => transaction['time'],
-      :timereceived => transaction['timereceived']
+      amount: (BigDecimal(transaction['amount'].to_s) * 100_000_000.0).to_i,
+      account_id: nil,
+      bet_id: nil,
+      operation_type: 'receive',
+      txid: transaction['txid'],
+      time: transaction['time'],
+      timereceived: transaction['timereceived']
     )
   end
 

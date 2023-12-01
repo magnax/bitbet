@@ -10,10 +10,10 @@ Metrics/BlockLength:
   Enabled: false
 
 Layout/EndOfLine:
-  Enabled: false
+  Enabled: true
 
 Style/HashSyntax:
-  Enabled: false
+  Enabled: true
 
 Style/ClassAndModuleChildren:
   Enabled: false

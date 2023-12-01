@@ -12,7 +12,7 @@ FactoryBot.define do
       banned { true }
     end
 
-    trait :published_bet do
+    trait :published do
       published_at { DateTime.now }
     end
   end

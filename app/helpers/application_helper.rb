@@ -24,6 +24,6 @@ module ApplicationHelper
   end
 
   def redirect_with_error(errmsg)
-    redirect_to root_path, :flash => { :error => errmsg }
+    redirect_to root_path, flash: { error: errmsg }
   end
 end

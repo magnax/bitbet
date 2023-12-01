@@ -11,7 +11,7 @@ class BidsController < ApplicationController
       redirect_to bet_path(@bet)
     else
       @bid.amount_in_stc = bid_amount_in_stc
-      render :template => 'bets/show'
+      render template: 'bets/show'
     end
   end
 

@@ -57,8 +57,8 @@ describe "User operations" do
 
       describe "withdraw error" do
         before do
-          @bitcoin_client = BitcoinClient.new
-          allow(@bitcoin_client).to receive(:sendfrom).and_raise(BitcoinClient::ConnectionError)
+          @bitcoin_client = Bitcoin::Client.new
+          allow(@bitcoin_client).to receive(:sendfrom).and_raise(Bitcoin::Client::ConnectionError)
           allow_any_instance_of(OperationsController).to receive(:bitcoin_client).and_return(@bitcoin_client)
           fill_in "Amount", with: "0,4"
         end

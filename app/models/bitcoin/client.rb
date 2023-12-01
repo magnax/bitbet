@@ -23,8 +23,8 @@ module Bitcoin
 
     def create_user_account(user)
       account = user.build_account({
-                                     :account_type => "deposit",
-                                     :nr => getnewaddress
+                                     account_type: "deposit",
+                                     nr: getnewaddress
                                    })
       return false unless account.save
 

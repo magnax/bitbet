@@ -19,7 +19,7 @@ class OperationsController < ApplicationController
           } and return
         end
       end
-    rescue BitcoinClient::ConnectionError
+    rescue Bitcoin::ConnectionError
       flash.now[:error] = I18n.t('flash.error.withdraw')
     end
     render 'withdraw'

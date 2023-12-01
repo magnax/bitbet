@@ -18,8 +18,8 @@ class AccountsController < ApplicationController
   def create_deposit_address
     begin
       account = current_user.build_account({
-                                             :account_type => "deposit",
-                                             :nr => bitcoin_client.getnewaddress
+                                             account_type: "deposit",
+                                             nr: bitcoin_client.getnewaddress
                                            })
       if account.save
         bitcoin_client.setaccount(account.nr, "user_#{current_user.id}")

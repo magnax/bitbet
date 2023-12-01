@@ -6,7 +6,7 @@ class AdminController < ApplicationController
 
   def info
     @address = bitcoin_client.getinfo
-  rescue BitcoinClient::ConnectionError
+  rescue Bitcoin::ConnectionError
     redirect_with_error I18n.t 'flash.error.client_error'
   end
 

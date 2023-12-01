@@ -40,7 +40,7 @@ describe Deposit::Check do
         @fake_client.set_response_for('listaccounts',
                                       { "user_1" => 0.04400000 })
         allow(Deposit::DepositUser).to receive(:new).and_return(double(
-                                                                  :get_last_deposit_id => '12345678'
+                                                                  get_last_deposit_id: '12345678'
                                                                 ))
       end
 
@@ -93,7 +93,7 @@ describe Deposit::Check do
           fake_client_response :one_good_first_transaction
           allow(Deposit::DepositUser).to receive(:new)
                                      .and_return(double(
-                                                   :get_last_deposit_id => nil, :create_new_deposit => true
+                                                   get_last_deposit_id: nil, create_new_deposit: true
                                                  ))
         end
 
@@ -109,7 +109,7 @@ describe Deposit::Check do
         before do
           fake_client_response :two_unconfirmed_transactions
           allow(Deposit::DepositUser).to receive(:new).and_return(double(
-                                                                    :get_last_deposit_id => nil
+                                                                    get_last_deposit_id: nil
                                                                   ))
         end
 

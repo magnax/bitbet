@@ -7,7 +7,7 @@ class BetsController < ApplicationController
   before_action :find_bet_by_id, except: %i[index new create bet404]
 
   def index
-    @bets = Bet.for_display(params.merge({ :user => current_user }))
+    @bets = Bet.for_display(params.merge({ user: current_user }))
     @status_names = Bet.status_names(current_user)
     @order_names = Bet.order_names
     @status = @status_names.keys.include?(params[:status]) ? @status_names[params[:status]] : 'widoczne'
@@ -29,7 +29,7 @@ class BetsController < ApplicationController
 
   def show
     redirect_to bet404_path unless bet_visible_for_all
-    @bid = Bid.new(:bet => @bet)
+    @bid = Bid.new(bet: @bet)
   end
 
   def publish
@@ -60,15 +60,15 @@ class BetsController < ApplicationController
   def end_bet
     return unless @bet.closed?
 
-    redirect_to @bet, :flash => {
-      :error => I18n.t('flash.error.cannot_settle')
+    redirect_to @bet, flash: {
+      error: I18n.t('flash.error.cannot_settle')
     }
   end
 
   def settle
     @bet.settle(params[:positive] ? true : false)
-    redirect_to @bet, :flash => {
-      :success => I18n.t('flash.success.bet_settled')
+    redirect_to @bet, flash: {
+      success: I18n.t('flash.success.bet_settled')
     }
   end
 

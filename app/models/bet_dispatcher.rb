@@ -89,6 +89,6 @@ class BetDispatcher
   private
 
   def bc
-    BitcoinClient.new
+    Bitcoin::Client.new
   end
 end

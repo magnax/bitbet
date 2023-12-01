@@ -7,11 +7,11 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 # user = User.create :email => 'mary@example.com', :password => 'guessit'
 Category.create [
-  { :name => 'Polityka' },
-  { :name => 'Sport' },
-  { :name => 'Technologia' },
-  { :name => 'Nauka' },
-  { :name => 'Rozrywka' },
-  { :name => 'Ekonomia' },
-  { :name => 'Inne' }
+  { name: 'Polityka' },
+  { name: 'Sport' },
+  { name: 'Technologia' },
+  { name: 'Nauka' },
+  { name: 'Rozrywka' },
+  { name: 'Ekonomia' },
+  { name: 'Inne' }
 ]

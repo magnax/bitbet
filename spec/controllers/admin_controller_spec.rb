@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe AdminController do
   before do
-    @controller.current_user = User.new(:admin => true)
+    @controller.current_user = User.new(admin: true)
     @fake_client = Bitcoin::FakeClient.new
     allow(@controller).to receive(:bitcoin_client).and_return(@fake_client)
   end

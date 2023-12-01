@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Settle bet by admin" do
   before do
-    allow_any_instance_of(BitcoinClient).to receive(:move).with(any_args).and_return('txid')
+    allow_any_instance_of(Bitcoin::Client).to receive(:move).with(any_args).and_return('txid')
     @bet = create(:bet)
   end
 

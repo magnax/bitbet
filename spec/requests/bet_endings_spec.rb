@@ -2,15 +2,15 @@ require 'spec_helper'
 
 describe "BetEndings" do
   Timecop.freeze(Date.parse("2013-11-10"))
-  let(:bet) { create(:published_bet) }
+  let(:bet) { create(:bet, :published) }
   Timecop.return
 
   subject { page }
 
   before do
-    @bitcoin_client = BitcoinClient.new
+    @bitcoin_client = Bitcoin::Client.new
     allow_any_instance_of(BetsController).to receive(:bitcoin_client).and_return(@bitcoin_client)
-    @user = create(:admin)
+    @user = create(:user, :admin)
     sign_in @user
   end
 
@@ -30,7 +30,7 @@ describe "BetEndings" do
       end
 
       it "actually settles bet" do
-        allow_any_instance_of(BitcoinClient).to receive(:move).with(any_args).and_return('txid')
+        allow_any_instance_of(Bitcoin::Client).to receive(:move).with(any_args).and_return('txid')
         click_button "Settle as TRUE"
         expect(page).to have_content "Event was successfully settled"
       end

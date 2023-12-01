@@ -19,7 +19,7 @@ gem 'sass-rails'
 gem 'therubyracer', platforms: :ruby
 gem 'turbolinks'
 gem 'uglifier'
-gem 'whenever', :require => false
+gem 'whenever', require: false
 
 group :development do
   gem 'better_errors', '2.1.1'
@@ -27,12 +27,12 @@ group :development do
 end
 
 group :development, :test do
-  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'pry-rails'
   gem 'rspec-its'
   gem 'rspec-rails'
-  gem 'simplecov', :require => false
+  gem 'simplecov', require: false
   gem 'test-unit'
 end
 
