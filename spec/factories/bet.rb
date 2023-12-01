@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :bet do
     sequence(:name) { |n| "Some bet name #{n}" }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Deposit
   class Check
     MIN_CONFIRMATIONS_REQUIRED = 3

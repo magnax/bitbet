@@ -25,7 +25,7 @@ Style/StringLiterals:
   Enabled: true
 
 Style/FrozenStringLiteralComment:
-  Enabled: false
+  Enabled: true
 
 Layout/TrailingEmptyLines:
   Enabled: true

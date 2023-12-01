@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Deposit
   class DepositUser
     def initialize(user_id)

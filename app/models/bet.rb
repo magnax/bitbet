@@ -1,4 +1,6 @@
 # encoding = utf-8
+# frozen_string_literal: true
+
 class Bet < ActiveRecord::Base
   include BitcoinHelper
   include BetsHelper

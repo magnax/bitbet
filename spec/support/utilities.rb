@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def sign_in(user)
   visit login_path
   fill_in 'Username', with: user.name

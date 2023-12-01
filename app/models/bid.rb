@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Bid < ActiveRecord::Base
   validates :user_id, presence: true
   validates :bet_id, presence: true

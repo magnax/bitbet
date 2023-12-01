@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 BitbetTk::Application.routes.draw do
   get 'operations/withdraw'
   get 'accounts/create'

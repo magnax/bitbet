@@ -1,4 +1,6 @@
 # encoding = utf-8
+# frozen_string_literal: true
+
 class BetsController < ApplicationController
   before_action :signed_in_user, only: %i[create new]
   before_action :admin_user, only: %i[

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Given(/^I have a published bet$/) do
   @bet = create(:published_bet)
   @bet.published_at.should == '2013-11-11 13:54:11'

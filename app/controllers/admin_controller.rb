@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AdminController < ApplicationController
   before_action :signed_in_user
   before_action :admin_user

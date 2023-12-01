@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module BitcoinHelper
   def amount_in_stc=(value)
     s = value.to_s.gsub(',', '.')

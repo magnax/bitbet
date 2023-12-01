@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BetDispatcher
   include BitcoinHelper
   include BetsHelper

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CheckUser
   def available_funds
     return unless operation_type == 'send'
