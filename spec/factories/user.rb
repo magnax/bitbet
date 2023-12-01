@@ -9,7 +9,7 @@ FactoryBot.define do
     password_confirmation { "111111" }
 
     trait :admin do
-      admin {true}
+      admin { true }
     end
   end
 end

@@ -39,8 +39,8 @@ end
 group :test do
   gem 'capybara'
   gem 'factory_bot_rails'
-  gem 'rspec-mocks'
   gem 'rails-controller-testing'
+  gem 'rspec-mocks'
   gem 'selenium-webdriver'
   gem 'timecop'
 end

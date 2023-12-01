@@ -2,7 +2,7 @@ class AccountsController < ApplicationController
   before_action :signed_in_user
 
   def new
-    @account = Account.new(:user => current_user)
+    @account = Account.new(user: current_user)
   end
 
   def create

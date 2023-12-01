@@ -5,22 +5,22 @@ describe Bet do
     @bet = create(:published_bet)
     @maniek = create(:user)
     create(:operation, {
-                         user_id: @maniek.id,
-                         amount: 200_000_000,
-                         operation_type: "receive"
-                       })
+             user_id: @maniek.id,
+             amount: 200_000_000,
+             operation_type: "receive"
+           })
     @sid = create(:user)
     create(:operation, {
-                         user_id: @sid.id,
-                         amount: 100_000_000,
-                         operation_type: "receive"
-                       })
+             user_id: @sid.id,
+             amount: 100_000_000,
+             operation_type: "receive"
+           })
     @ella = create(:user)
     create(:operation, {
-                         user_id: @ella.id,
-                         amount: 120_000_000,
-                         operation_type: "receive"
-                       })
+             user_id: @ella.id,
+             amount: 120_000_000,
+             operation_type: "receive"
+           })
     Bid.create({ bet_id: @bet.id, user_id: @maniek.id, amount_in_stc: 1.0, positive: true })
     Bid.create({ bet_id: @bet.id, user_id: @sid.id, amount_in_stc: 0.5, positive: true })
     Bid.create({ bet_id: @bet.id, user_id: @ella.id, amount_in_stc: 1.0, positive: false })

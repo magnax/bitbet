@@ -26,10 +26,10 @@ Given(/^I have a users with amounts:$/) do |table|
   table.raw.each do |name, amount|
     bid_user = create(:user, { name: name })
     create(:operation, {
-                         user_id: bid_user.id,
-                         amount: amount * 100_000_000,
-                         operation_type: "receive"
-                       })
+             user_id: bid_user.id,
+             amount: amount * 100_000_000,
+             operation_type: "receive"
+           })
   end
 end
 

@@ -6,9 +6,6 @@ AllCops:
     - 'config/initializers/pluralization.rb'
   NewCops: enable
 
-Style/Documentation:
-  Enabled: false
-
 Metrics/BlockLength:
   Enabled: false
 
@@ -63,4 +60,7 @@ Metrics/CyclomaticComplexity:
   Enabled: false
 
 Style/MissingRespondToMissing:
+  Enabled: false
+
+Style/Documentation:
   Enabled: false
